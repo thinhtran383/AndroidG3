@@ -84,8 +84,8 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
 
   Widget buildButton(String buttonText) {
     return Expanded(
-      child: TextButton(
-        style: TextButton.styleFrom(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
           primary: Colors.white,
           backgroundColor: Colors.blue,
           onSurface: Colors.grey,
@@ -149,7 +149,8 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
             children: [
               buildButton('.'),
               buildButton('0'),
-              buildButton('00'),     buildButton('+'),
+              buildButton('00'),   
+              buildButton('+'),
         ],
       ),
       Row(
