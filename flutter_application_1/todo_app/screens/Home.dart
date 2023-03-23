@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
 import '../models/ToDo.dart';
+import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
 import '../widgets/Todo_item.dart';
-
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key); 
@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final todoList = ToDo.todoList();
-  final todoController = TextEditingController();
+ final todoController = TextEditingController();
 
   List <ToDo> foundToDo = [];
 
@@ -29,13 +29,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: tdBGColor,
-      appBar: buildAppBar(),
+      appBar: appBar().buildAppBar(),
       body: Stack(
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
               children: [
+                
                 SearchBox(runSearch: (p0) => runSearch(p0)),
                 Expanded(
                   child: ListView(
@@ -51,13 +52,13 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       
-                      for(ToDo todo in foundToDo.reversed)
+                      for(ToDo todo in foundToDo.reversed) // in ra danh sach todo
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: onClickTodoItem,
-                          onToDoDeleted: onClickDeleteIcon,
+                          
                           ),
-                        
+                      
                     ],
                   ),
                 )
@@ -72,57 +73,107 @@ class _HomeState extends State<Home> {
                   child: Container(
                     margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Colors.blueGrey[100],
                       boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 0,
-                          blurRadius: 10,
-                          offset: Offset.zero, 
-                        ),
+                        // BoxShadow(
+                        //   color: Colors.grey,
+                        //   spreadRadius: 0,
+                        //   blurRadius: 10,
+                        //   offset: Offset.zero, 
+                        // ),
                       ],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: TextField(
-                      
-                      controller: todoController,
-                      decoration: InputDecoration(
-                        hintText: "Add new task",
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                        ),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+
+                    child: Expanded(
+                      child: Stack(
+                        children: <Widget> [
+                          TextField(
+                            controller: todoController,
+                            decoration: InputDecoration(
+                              hintText: "Add new task",
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            ),
+                          ),
+
+                          Positioned(
+                            bottom: 9.5,
+                            right: 12,
+                            child: IconButton(
+                              onPressed: () {
+                                addToDoIteam(todoController.text);
+                              },
+                              icon: Image.asset("C:/Users/ThinhTran/Desktop/flutter_application/flutter_application_1/todo_app/assets/img.png"), // chỗ cần chèn
+                              
+                              
+                            ),
+                            
+                          )
+                          // tạo một elevated button vào ben phai cua textfield\
+                          
+                        ],
                       ),
                     ),
+
+                    // child: Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Stack(
+                    //           children: <Widget>[ TextField(
+                    //           controller: todoController,
+                    //           decoration: InputDecoration(
+                    //             hintText: "Add new task",
+                    //             hintStyle: TextStyle(
+                    //               color: Colors.black,
+                    //               fontSize: 16,
+                    //             ),
+                    //             border: InputBorder.none,
+                    //             contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    //           ),
+                    //         ),
+
+                            
+
+                    //       ],
+                    //     ),
+                    //     ),
+                    //   ],
+                    // ),
                   ),
                 ),
-                 Container(
-                  margin: EdgeInsets.only(bottom: 20, right: 20),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      addToDoIteam(todoController.text);
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    
-                    style: ElevatedButton.styleFrom(
-                      primary: tdBlue,
-                      minimumSize: const Size(60,60),
-                      elevation: 5,
-                    ),
 
-                  ),
-                  ),
+
+            
+                //  Container(
+                //   margin: EdgeInsets.only(bottom: 20, right: 20),
+                //   child: ElevatedButton(
+                //     onPressed: () {
+                //       addToDoIteam(todoController.text);
+                //     },
+                //     child: Icon(
+                //       Icons.add,
+                //       color: Colors.white,
+                //       size: 20,
+                //     ),
+                    
+                //     style: ElevatedButton.styleFrom(
+                //       primary: tdBlue,
+                //       minimumSize: const Size(60,60),
+                //       elevation: 5,
+                //     ),
+
+                //   ),
+                //   ),
                 
               ]
             ),
           ),
-          
+         
         ],
       )
       
@@ -130,21 +181,53 @@ class _HomeState extends State<Home> {
   } 
 
   void onClickTodoItem(ToDo todo){
-      
       setState(() {
         todo.isDone = !todo.isDone;
+        
       });
+
+      if(todo.isDone){
+        
+        setState(() {
+          todo.isDone = true;
+          todoList.removeWhere((todo) => todo.isDone == true);
+        });
+        
+        ScaffoldMessenger.of(context).showSnackBar( // hien thi thong bao
+          SnackBar(
+            content: Text(
+              "Task completed",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.green,
+          )
+        );
+      } 
+      //else {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(
+      //       content: Text("Task uncompleted"),
+      //       duration: Duration(seconds: 1),
+      //       backgroundColor: Colors.red,
+      //     )
+      //   );
+      // }
   }
 
 
-  void onClickDeleteIcon(String id){
-    setState(() {
-      todoList.removeWhere((todo) => todo.id == id);
-    });
-  }
+  // void onClickDeleteIcon(String id){
+  //   setState(() {
+  //     todoList.removeWhere((todo) => todo.id == id);
+  //   });
+  // }
 
   void addToDoIteam(String toDo){
     setState(() {
+      if(toDo.isEmpty) return; // neu khong co gi thi khong lam gi ca
       todoList.add(
         ToDo(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -152,12 +235,12 @@ class _HomeState extends State<Home> {
       );
     });
 
-   todoController.clear();
+  todoController.clear();
   }
 
   void runSearch(String query){
     List<ToDo> result = [];
-    if(query.isEmpty){
+    if(query.isEmpty){ // neu khong co gi thi khong lam gi ca
       result = todoList;
       } else {
         result = todoList.where((todo) => todo.contentTodo!.toLowerCase().contains(query.toLowerCase())).toList();
@@ -169,27 +252,6 @@ class _HomeState extends State<Home> {
   }
 
 
-  AppBar buildAppBar(){
-    return AppBar(
-          elevation: 0,
-          backgroundColor: tdBGColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.menu,
-                color: tdBlack,
-                ),
-              Container(
-                height: 40,
-                width: 40,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(200),
-                  child: Image.asset("#"),
-                ),
-              ), 
-            ],
-          ),
-        );
-  }
+
+  
 }

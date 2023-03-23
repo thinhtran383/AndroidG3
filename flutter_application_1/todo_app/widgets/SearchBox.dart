@@ -13,8 +13,8 @@ class SearchBox extends StatelessWidget {
     return Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+                color: Colors.blueGrey[100],
+                borderRadius: BorderRadius.circular(10),
               ),
               child: TextField(
                 onChanged: (value) => runSearch(value),

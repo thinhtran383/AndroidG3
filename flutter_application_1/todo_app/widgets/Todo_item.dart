@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
 import '../models/ToDo.dart';
-
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
-  final onToDoDeleted;
-  const ToDoItem({Key? key, required this.todo, required this.onToDoChanged, required this.onToDoDeleted}) : super(key: key);
+
+  const ToDoItem({Key? key, required this.todo, required this.onToDoChanged}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -34,22 +33,22 @@ class ToDoItem extends StatelessWidget {
           ),
         ),
 
-        trailing: Container( // delete icon
-          height: 35,
-          width: 35,
-          decoration: BoxDecoration(
-            color: tdRed,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: IconButton(
-            color: Colors.white,
-            iconSize: 18,
-            icon: Icon(Icons.delete),
-            onPressed: (){
-              onToDoDeleted(todo.id); //
-            },
-          ),
-        ),
+        // trailing: Container( // delete icon
+        //   height: 35,
+        //   width: 35,
+        //   decoration: BoxDecoration(
+        //     color: tdRed,
+        //     borderRadius: BorderRadius.circular(5),
+        //   ),
+        //   child: IconButton(
+        //     color: Colors.white,
+        //     iconSize: 18,
+        //     icon: Icon(Icons.delete),
+        //     onPressed: (){
+        //       onToDoDeleted(todo.id); //
+        //     },
+        //   ),
+        // ),
       ),
     );
   }
