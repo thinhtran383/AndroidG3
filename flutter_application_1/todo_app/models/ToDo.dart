@@ -1,9 +1,11 @@
+
 class ToDo{
   String? id;
   String? contentTodo;
   bool isDone;
-
-  ToDo({required this.id, this.isDone = false, required this.contentTodo});
+  bool isLate;
+  ToDo({required this.id, this.isDone = false, required this.contentTodo, this.isLate = false});
+  
 
 
   static List<ToDo> todoList() { 

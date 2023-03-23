@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         // elevation: 0,
       ),
+      
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
         child: Icon(Icons.add),
