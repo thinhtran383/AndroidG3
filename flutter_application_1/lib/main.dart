@@ -9,56 +9,12 @@ class MyApp extends StatelessWidget{
       title: "Demo App",
       home: Scaffold(
         backgroundColor: Colors.blue,
-        persistentFooterButtons: <Widget>[
-          ElevatedButton(
-            child: const Text("persistentFooterButtons"),
-            onPressed: () {
-              print("persistentFooterButtons");
-            },
-          ),
-          ElevatedButton(
-            child: const Text("persistentFooterButtons"),
-            onPressed: () {
-              print("persistentFooterButtons");
-            },
-          ),
-          ElevatedButton(
-            child: const Text("persistentFooterButtons"),
-            onPressed: () {
-              print("persistentFooterButtons");
-            },
-          ),
-        ],
+       
         
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.mail),
-              label: "Mail",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Person",
-            ),
-          ],
-          currentIndex: 0,
-          selectedItemColor: Colors.amber[800],
-          onTap: (int index) {
-            print("BottomNavigationBar");
-          },
-        ),
+        
+        
 
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print("FloatingActionButton");
-          },
-          child: const Icon(Icons.add),
-          backgroundColor: Colors.green,
-        ),
+      
        
         appBar: AppBar(
           title: const Text(
