@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 
-import '../constants/Colors.dart';
+import 'package:flutter/material.dart';
 import '../models/ToDo.dart';
 import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
-import '../widgets/TitleView.dart';
 import '../widgets/Todo_item.dart';
 
 class Home extends StatefulWidget {
@@ -15,66 +13,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todoList = ToDo.todoList();
- final todoController = TextEditingController();
 
+ 
+
+  final todoList = ToDo.todoList();
+  final todoController = TextEditingController();
   List <ToDo> foundToDo = [];
 
   @override
   void initState() {
     foundToDo = todoList;
     super.initState();
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        backgroundColor: Colors.white,
-        child: ListView(
-          children: [
-            
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(Icons.home, color: Colors.black,),
-                  SizedBox(width: 10,),
-                  Text("Home"),
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-
-            
-            
-            SizedBox(height: 10,),
-
-            ListTile(
-              title: Row(
-                children: [
-                  // icon da hoan thanh
-                  Icon(Icons.check_circle, color: Colors.black,),
-                  
-                  SizedBox(width: 10,),
-                  Text("Done"),
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-
-            SizedBox(height: 10,),
-
-            
-          ],
-        ),
-      ),
-      
-      
-      backgroundColor: tdBGColor,
+      backgroundColor: Colors.grey[200],
       appBar: appBar().buildAppBar(),
       body: Stack(
         children: [
@@ -105,6 +60,29 @@ class _HomeState extends State<Home> {
                           onToDoDeleted: onClickDeleteIcon,
                           ),
                       
+                      ListView(
+                        shrinkWrap: true,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 50, bottom: 20),
+                            child: Text(
+                              "Done",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      for(ToDo todo in foundToDo.reversed) // in ra danh sach todo
+                        ToDoItem(
+                          todo: todo,
+                          onToDoChanged: onClickTodoItem,
+                          onToDoDeleted: onClickDeleteIcon,
+                          ),
+                     
+                      
                     ],
                   ),
                 )
@@ -117,7 +95,7 @@ class _HomeState extends State<Home> {
               children: <Widget> [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
+                    margin: EdgeInsets.only(bottom: 25, right: 25, left: 25),
                     decoration: BoxDecoration(
                       color: Colors.blueGrey[100],
                       boxShadow: [
@@ -147,28 +125,50 @@ class _HomeState extends State<Home> {
                             ),
                           ),
 
-                          Positioned(
-                            bottom: 9.5,
-                            right: 12,
-                            child: IconButton(
-                              focusColor: Colors.red,
-                              onPressed: () {
-                                addToDoIteam(todoController.text);
-                              },
-                              icon: Text(
-                                "+",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                          
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                height: 50,
+                                child: Positioned(
+                                  bottom: 9,
+                                  right: 60,
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                  Icons.calendar_month,
                                   color: Colors.black,
-                                )
+                                  size: 25,
+                                  ),
+                            )
+
+                                ),
                               ),
-                              
-                              
-                            ),
-                            
-                          )
+
+                              SizedBox(width: 20,),
+
+                              SizedBox(
+                                height: 50,
+                                child: Positioned(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      addToDoIteam(todoController.text);
+                                    },
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Colors.black,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ),
+                              ),
                     
+                            ],
+                          ),
+
+                         
                           
                         ],
                       ),
@@ -246,9 +246,12 @@ class _HomeState extends State<Home> {
           todo.isDone = true;
           todoList.removeWhere((todo) => todo.isDone == true);
         });
-        
+
         ScaffoldMessenger.of(context).showSnackBar( // hien thi thong bao
           SnackBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
             content: Text(
               "Task completed",
               style: TextStyle(
@@ -258,6 +261,7 @@ class _HomeState extends State<Home> {
             ),
             duration: Duration(seconds: 1),
             backgroundColor: Colors.green,
+            elevation: 100,
           )
         );
       } 
@@ -278,8 +282,14 @@ class _HomeState extends State<Home> {
       todoList.removeWhere((todo) => todo.id == id);
     });
 
+    
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+    ),
+        
         content: Text(
           "Task deleted",
           style: TextStyle(
@@ -298,7 +308,7 @@ class _HomeState extends State<Home> {
       if(toDo.isEmpty) return; // neu khong co gi thi khong lam gi ca
       todoList.add(
         ToDo(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          id: DateTime.now().millisecondsSinceEpoch.toString(), // 
           contentTodo: toDo)
       );
     });
