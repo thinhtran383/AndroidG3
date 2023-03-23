@@ -4,6 +4,7 @@ import '../constants/Colors.dart';
 import '../models/ToDo.dart';
 import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
+import '../widgets/TitleView.dart';
 import '../widgets/Todo_item.dart';
 
 class Home extends StatefulWidget {
@@ -28,6 +29,51 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        child: ListView(
+          children: [
+            
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(Icons.home, color: Colors.black,),
+                  SizedBox(width: 10,),
+                  Text("Home"),
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            
+            
+            SizedBox(height: 10,),
+
+            ListTile(
+              title: Row(
+                children: [
+                  // icon da hoan thanh
+                  Icon(Icons.check_circle, color: Colors.black,),
+                  
+                  SizedBox(width: 10,),
+                  Text("Done"),
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            SizedBox(height: 10,),
+
+            
+          ],
+        ),
+      ),
+      
+      
       backgroundColor: tdBGColor,
       appBar: appBar().buildAppBar(),
       body: Stack(
@@ -56,7 +102,7 @@ class _HomeState extends State<Home> {
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: onClickTodoItem,
-                          
+                          onToDoDeleted: onClickDeleteIcon,
                           ),
                       
                     ],
@@ -105,16 +151,24 @@ class _HomeState extends State<Home> {
                             bottom: 9.5,
                             right: 12,
                             child: IconButton(
+                              focusColor: Colors.red,
                               onPressed: () {
                                 addToDoIteam(todoController.text);
                               },
-                              icon: Image.asset("C:/Users/ThinhTran/Desktop/flutter_application/flutter_application_1/todo_app/assets/img.png"), // chỗ cần chèn
+                              icon: Text(
+                                "+",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                )
+                              ),
                               
                               
                             ),
                             
                           )
-                          // tạo một elevated button vào ben phai cua textfield\
+                    
                           
                         ],
                       ),
@@ -219,11 +273,25 @@ class _HomeState extends State<Home> {
   }
 
 
-  // void onClickDeleteIcon(String id){
-  //   setState(() {
-  //     todoList.removeWhere((todo) => todo.id == id);
-  //   });
-  // }
+  void onClickDeleteIcon(String id){
+    setState(() {
+      todoList.removeWhere((todo) => todo.id == id);
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Task deleted",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+        duration: Duration(seconds: 1),
+        backgroundColor: Colors.red,
+      )
+    );
+  }
 
   void addToDoIteam(String toDo){
     setState(() {
