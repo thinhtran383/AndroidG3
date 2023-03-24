@@ -29,16 +29,16 @@ class ToDoItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              todo.contentTodo!,
+            Text( 
+              todo.contentTodo!, 
             style: TextStyle(
               fontSize: 16,
               color: tdBlack,
               decoration: todo.isDone ?  TextDecoration.lineThrough : null,
               ),
             ),
-            SizedBox(height: 5,),
-            Text(
+            SizedBox(height: 5,), 
+            Text( // hien thi ngay
               todo.date!,
               style: TextStyle(
                 fontSize: 10,

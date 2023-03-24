@@ -19,6 +19,8 @@ class _HomeState extends State<Home> {
 
   final todoList = ToDo.todoList();
   final todoController = TextEditingController();
+
+  List<ToDo> todoListDone = [];
   List <ToDo> foundToDo = [];
 
   @override
@@ -41,7 +43,7 @@ class _HomeState extends State<Home> {
                 
                 SearchBox(runSearch: (p0) => runSearch(p0)),
                 Expanded(
-                  child: ListView(
+                  child: ListView( // Todo list
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 50, bottom: 20),
@@ -61,27 +63,27 @@ class _HomeState extends State<Home> {
                           onToDoDeleted: onClickDeleteIcon,
                           ),
                       
-                      // ListView(
-                      //   shrinkWrap: true,
-                      //   children: [
-                      //     Container(
-                      //       margin: EdgeInsets.only(top: 50, bottom: 20),
-                      //       child: Text(
-                      //         "Done",
-                      //         style: TextStyle(
-                      //           fontSize: 30,
-                      //           fontWeight: FontWeight.w500
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // for(ToDo todo in foundToDo.reversed) // in ra danh sach todo
-                      //   ToDoItem(
-                      //     todo: todo,
-                      //     onToDoChanged: onClickTodoItem,
-                      //     onToDoDeleted: onClickDeleteIcon,
-                      //     ),
+                      ListView( // Done list
+                        shrinkWrap: true,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 50, bottom: 20),
+                            child: Text(
+                              "Done",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      for(ToDo todo in todoListDone.reversed) // in ra danh sach todo
+                        ToDoItem(
+                          todo: todo,
+                          onToDoChanged: onClickTodoItemDone,
+                          onToDoDeleted: onClickDeleteIcon,
+                          ),
                      
                       
                     ],
@@ -100,7 +102,7 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(
                       color: Colors.blueGrey[100],
                       boxShadow: [
-                        // BoxShadow(
+                        // BoxShadow( // do bong
                         //   color: Colors.grey,
                         //   spreadRadius: 0,
                         //   blurRadius: 10,
@@ -127,7 +129,6 @@ class _HomeState extends State<Home> {
                           ),
 
                           Row(
-                            
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -235,7 +236,31 @@ class _HomeState extends State<Home> {
     );
   } 
 
-  void onClickTodoItem(ToDo todo){
+  void onClickTodoItemDone(ToDo todo){
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
+
+    if(todo.isDone){ // check todolistdone va day vao todolist
+      setState(() {
+        todo.isDone = true;
+        todoListDone.add(todo);
+        todoList.removeWhere((todo) => todo.isDone == true);
+      });
+      
+    } else {
+      setState(() {
+        todo.isDone = false;
+        todoList.add(todo);
+        todoListDone.removeWhere((todo) => todo.isDone == false);
+      });
+    }
+
+  }
+
+  
+
+  void onClickTodoItem(ToDo todo){ // check todolist va day vao todolistdone
       setState(() {
         todo.isDone = !todo.isDone;
       });
@@ -244,6 +269,7 @@ class _HomeState extends State<Home> {
         
         setState(() {
           todo.isDone = true;
+          todoListDone.add(todo);
           todoList.removeWhere((todo) => todo.isDone == true);
         });
 
@@ -277,9 +303,12 @@ class _HomeState extends State<Home> {
   }
 
 
+  
+
   void onClickDeleteIcon(String id){
     setState(() {
       todoList.removeWhere((todo) => todo.id == id);
+      todoListDone.removeWhere((todo) => todo.id == id);
     });
 
     
@@ -302,6 +331,8 @@ class _HomeState extends State<Home> {
       )
     );
   }
+
+  
 
   void addToDoIteam(String toDo){
     String date = DateFormat('dd-MM-yyyy').format(currentDate);
