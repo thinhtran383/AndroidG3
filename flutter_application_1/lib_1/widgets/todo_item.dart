@@ -44,8 +44,12 @@ class ToDoItem extends StatelessWidget {
             ),
           ),
           Text(
-            todo.date!
-            
+            todo.date!,
+            style: TextStyle(
+              fontSize: 5,
+              color: Colors.blueGrey,
+              decoration: todo.isDone ? TextDecoration.lineThrough : null,
+            ),
 
           ),
         ],

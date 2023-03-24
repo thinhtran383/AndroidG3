@@ -24,28 +24,26 @@ class ToDoItem extends StatelessWidget {
           todo.isDone ? Icons.check_box : Icons.check_box_outline_blank ,
           color: tdBlue ,
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              todo.contentTodo!,
-            style: TextStyle(
-              fontSize: 16,
-              color: tdBlack,
-              decoration: todo.isDone ?  TextDecoration.lineThrough : null,
-              ),
-            ),
-            SizedBox(height: 5,),
-            Text(
-              todo.date!,
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.blueGrey,
-              ),
-            )
-          ],
+title: Row(
+  mainAxisAlignment: MainAxisAlignment.spaceAround,
+  children: [
+    Text(
+          todo.contentTodo!,
+        style: TextStyle(
+          fontSize: 16,
+          color: todo.dateDone ? tdRed:tdBlack,
+          decoration: todo.isDone ?  TextDecoration.lineThrough : null,
+          ),
         ),
+      SizedBox(width: 8),
+      Text(
+        todo.isDate.toString()
+      )
+      
+  ],
+),
+
+      
 
         trailing: Container( // delete icon
           height: 35,

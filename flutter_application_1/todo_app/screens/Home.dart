@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../models/ToDo.dart';
 import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
@@ -125,10 +126,10 @@ class _HomeState extends State<Home> {
                             ),
                           ),
 
-                          
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            
                             mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               SizedBox(
                                 height: 50,
@@ -136,7 +137,10 @@ class _HomeState extends State<Home> {
                                   bottom: 9,
                                   right: 60,
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _selectDate(context);
+                                      // print(currentDate);
+                                    },
                                     icon: Icon(
                                   Icons.calendar_month,
                                   color: Colors.black,
@@ -146,9 +150,6 @@ class _HomeState extends State<Home> {
 
                                 ),
                               ),
-
-                              SizedBox(width: 20,),
-
                               SizedBox(
                                 height: 50,
                                 child: Positioned(
@@ -237,7 +238,6 @@ class _HomeState extends State<Home> {
   void onClickTodoItem(ToDo todo){
       setState(() {
         todo.isDone = !todo.isDone;
-        
       });
 
       if(todo.isDone){
@@ -304,16 +304,19 @@ class _HomeState extends State<Home> {
   }
 
   void addToDoIteam(String toDo){
+    String date = DateFormat('dd-MM-yyyy').format(currentDate);
     setState(() {
       if(toDo.isEmpty) return; // neu khong co gi thi khong lam gi ca
       todoList.add(
         ToDo(
           id: DateTime.now().millisecondsSinceEpoch.toString(), // 
-          contentTodo: toDo)
+          contentTodo: toDo,
+          date: date)
       );
     });
 
   todoController.clear();
+
   }
 
   void runSearch(String query){
@@ -327,6 +330,24 @@ class _HomeState extends State<Home> {
     setState(() {
       foundToDo = result;
     });
+  }
+
+  
+  DateTime currentDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2050));
+    if (pickedDate != null && pickedDate != currentDate) {
+      setState(() {
+        final difference = pickedDate.difference(DateTime.now());
+        final seconds = difference.inSeconds;
+        currentDate = pickedDate;
+      });
+    }
   }
 
 

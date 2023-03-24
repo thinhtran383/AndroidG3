@@ -1,10 +1,11 @@
 
 class ToDo{
+  String? date;
   String? id;
   String? contentTodo;
   bool isDone;
   bool isLate;
-  ToDo({required this.id, this.isDone = false, required this.contentTodo, this.isLate = false});
+  ToDo({required this.id, this.isDone = false, required this.contentTodo, this.isLate = false, this.date = " "});
   
 
 
