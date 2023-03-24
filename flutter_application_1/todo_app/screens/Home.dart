@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../models/ToDo.dart';
 import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
+import '../widgets/TitleView.dart';
 import '../widgets/Todo_item.dart';
 
 class Home extends StatefulWidget {
@@ -43,41 +44,16 @@ class _HomeState extends State<Home> {
                 
                 SearchBox(runSearch: (p0) => runSearch(p0)),
                 Expanded(
-                  child: ListView( // Todo list
+                  child: ListView(
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 50, bottom: 20),
-                        child: Text(
-                          "ToDo List",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ),
-                      
+                      TitleView(contentTitle: "ToDo List",),
                       for(ToDo todo in foundToDo.reversed) // in ra danh sach todo
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: onClickTodoItem,
                           onToDoDeleted: onClickDeleteIcon,
                           ),
-                      
-                      ListView( // Done list
-                        shrinkWrap: true,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 50, bottom: 20),
-                            child: Text(
-                              "Done",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w500
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      TitleView(contentTitle: "Done"),
                       for(ToDo todo in todoListDone.reversed) // in ra danh sach todo
                         ToDoItem(
                           todo: todo,
