@@ -1,6 +1,6 @@
 
 class ToDo{
-  String? date;
+  String date;
   String? id;
   String? contentTodo;
   bool isDone;

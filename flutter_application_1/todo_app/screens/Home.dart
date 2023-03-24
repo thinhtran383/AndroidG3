@@ -61,27 +61,27 @@ class _HomeState extends State<Home> {
                           onToDoDeleted: onClickDeleteIcon,
                           ),
                       
-                      ListView(
-                        shrinkWrap: true,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 50, bottom: 20),
-                            child: Text(
-                              "Done",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w500
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      for(ToDo todo in foundToDo.reversed) // in ra danh sach todo
-                        ToDoItem(
-                          todo: todo,
-                          onToDoChanged: onClickTodoItem,
-                          onToDoDeleted: onClickDeleteIcon,
-                          ),
+                      // ListView(
+                      //   shrinkWrap: true,
+                      //   children: [
+                      //     Container(
+                      //       margin: EdgeInsets.only(top: 50, bottom: 20),
+                      //       child: Text(
+                      //         "Done",
+                      //         style: TextStyle(
+                      //           fontSize: 30,
+                      //           fontWeight: FontWeight.w500
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // for(ToDo todo in foundToDo.reversed) // in ra danh sach todo
+                      //   ToDoItem(
+                      //     todo: todo,
+                      //     onToDoChanged: onClickTodoItem,
+                      //     onToDoDeleted: onClickDeleteIcon,
+                      //     ),
                      
                       
                     ],

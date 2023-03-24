@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../constants/Colors.dart';
 import '../models/ToDo.dart';
@@ -41,7 +42,7 @@ class ToDoItem extends StatelessWidget {
               todo.date!,
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.blueGrey,
+                color: isCurrentDate(todo.date) ? Colors.grey : Colors.red,
               ),
             )
           ],
@@ -65,6 +66,26 @@ class ToDoItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+
+  bool isCurrentDate(String date) {
+    String otherDateStr = todo.date;
+    if(otherDateStr == " "){
+      return true;
+    }
+
+    
+    DateTime otherDate = DateFormat("dd-MM-yyyy").parse(otherDateStr);
+
+    DateTime _currentDate = DateTime.now();
+
+    bool isDateAfterToday = _currentDate.isAfter(otherDate);
+    if(isDateAfterToday){
+      return false;
+    }
+    return true;
   }
 
 }
