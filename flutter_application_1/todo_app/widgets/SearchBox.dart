@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import '../constants/Colors.dart';
-import '../screens/Home.dart';
 class SearchBox extends StatelessWidget {
   
   final Function(String) runSearch;

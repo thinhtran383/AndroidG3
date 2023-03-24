@@ -17,7 +17,7 @@ class appBar{
                 width: 40,
                 child: ClipRRect( // bo tron anh
                   borderRadius: BorderRadius.circular(200),
-                  child: Image.asset("#"),
+                  child: Image.asset("../assets/images/img.png"),
                 ),
               ), 
             ],

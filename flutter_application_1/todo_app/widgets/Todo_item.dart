@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../constants/Colors.dart';
+// import '../constants/Colors.dart';
 import '../models/ToDo.dart';
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
@@ -23,7 +23,7 @@ class ToDoItem extends StatelessWidget {
         tileColor: Colors.white ,
         leading: Icon(
           todo.isDone ? Icons.check_box : Icons.check_box_outline_blank ,
-          color: tdBlue ,
+          color: Colors.green,
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class ToDoItem extends StatelessWidget {
               todo.contentTodo!, 
             style: TextStyle(
               fontSize: 16,
-              color: tdBlack,
+              color: Colors.black,
               decoration: todo.isDone ?  TextDecoration.lineThrough : null,
               ),
             ),
@@ -52,13 +52,13 @@ class ToDoItem extends StatelessWidget {
           height: 35,
           width: 35,
           decoration: BoxDecoration(
-            color: tdRed,
+            color: Colors.red,
             borderRadius: BorderRadius.circular(5),
           ),
           child: IconButton(
             color: Colors.white,
             iconSize: 18,
-            icon: Icon(Icons.delete),
+            icon: Icon(Icons.delete_forever),
             onPressed: (){
               onToDoDeleted(todo.id); //
             },
