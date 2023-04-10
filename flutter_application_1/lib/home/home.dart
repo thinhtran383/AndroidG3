@@ -4,23 +4,25 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../model/data/data.dart';
 import '../network/network_request.dart';
+import 'bottomBar.dart';
 
 class home extends StatefulWidget {
   final String MSV;
 
-   home({required this.MSV});
+  home({required this.MSV});
 
   @override
   State<home> createState() => _homeState();
 }
 
 class _homeState extends State<home> {
-    List<Data> data = [];
-@override
+  List<Data> data = [];
+  @override
   void initState() {
     super.initState();
 
-    fetchData('79BE3FF1328F49A397E15EFAF4E83870', '03%2F04%2F2023', '09%2F04%2F2023')
+    fetchData('79BE3FF1328F49A397E15EFAF4E83870', '03%2F04%2F2023',
+            '09%2F04%2F2023')
         .then((value) {
       setState(() {
         data = value;
@@ -29,14 +31,14 @@ class _homeState extends State<home> {
   }
 
   @override
-  
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("${widget.MSV}"),
         automaticallyImplyLeading: false,
+        backgroundColor: Color.fromARGB(255, 0, 162, 221), // Đổi màu nền thành màu xanh
       ),
-      
+
       body: Column(
         children: [
           Expanded(
@@ -45,7 +47,8 @@ Widget build(BuildContext context) {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    title: Text('${data[index].TENPHONGHOC}, ${data[index].THU}'),
+                    title:
+                        Text('${data[index].TENPHONGHOC}, ${data[index].THU}'),
                     subtitle: Text('${data[index].SOTIET}'),
                   ),
                 );
@@ -54,12 +57,12 @@ Widget build(BuildContext context) {
           ),
         ],
       ),
+      bottomNavigationBar: bottomBar()
+
+      // tạo cho tôi 1 secureFooterButton có 3 nút bấm  là 1. Đăng ký 2. Đăng nhập 3. Đăng xuất
     );
   }
 }
-
-
-
 
 // Widget build(BuildContext context) {
 //     return Scaffold(
@@ -67,7 +70,7 @@ Widget build(BuildContext context) {
 //         title: Text("${widget.MSV}"),
 //         automaticallyImplyLeading: false,
 //       ),
-      
+
 //       body: Column(
 //         children: [
 //           Expanded(
