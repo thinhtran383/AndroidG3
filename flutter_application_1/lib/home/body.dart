@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,9 +9,10 @@ import '../model/data/data.dart';
 import '../network/network_request.dart';
 
 class Body extends StatelessWidget {
+ final List<String> time = ['6h45','7h40','8h35','9h30','10h25','11h20','12h15','13h10','14h05','15h00','15h55','16h50','17h45'];
   final List<Data> data;
 
-  const Body({Key? key, required this.data}) : super(key: key);
+  Body({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +61,12 @@ class Body extends StatelessWidget {
                                         Text('${data[index].TENHOCPHAN}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 20.0,
+                                              fontSize: 15.0,
                                             )),
                                         Text('${data[index].TENPHONGHOC}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 20.0,
+                                              fontSize: 15.0,
                                             )),
                                       ],
                                     ),
