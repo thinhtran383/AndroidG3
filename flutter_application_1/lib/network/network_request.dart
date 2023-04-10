@@ -25,7 +25,7 @@ Future<List<Data>> fetchData(String userId, String startDate, String endDate) as
   );
 
   if (response.statusCode == 200) {
-    print("baro");
+   
  
     return compute(parseData, response.body);
     

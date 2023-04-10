@@ -4,10 +4,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../model/data/data.dart';
 import '../network/network_request.dart';
+import 'body.dart';
 import 'bottomBar.dart';
 
 class home extends StatefulWidget {
   final String MSV;
+    
 
   home({required this.MSV});
 
@@ -17,76 +19,29 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   List<Data> data = [];
+
   @override
   void initState() {
     super.initState();
-
-    fetchData('79BE3FF1328F49A397E15EFAF4E83870', '03%2F04%2F2023',
-            '09%2F04%2F2023')
-        .then((value) {
-      setState(() {
-        data = value;
-      });
-    });
+   fetchData('79BE3FF1328F49A397E15EFAF4E83870', '03%2F04%2F2023',
+        '09%2F04%2F2023')
+    .then((value) {
+  setState(() {
+    data = value;
+  });
+});
   }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("${widget.MSV}"),
-        automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 0, 162, 221), // Đổi màu nền thành màu xanh
-      ),
+      appBar:null,
 
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title:
-                        Text('${data[index].TENPHONGHOC}, ${data[index].THU}'),
-                    subtitle: Text('${data[index].SOTIET}'),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+      body: Body(data: data,),
       bottomNavigationBar: bottomBar()
 
       // tạo cho tôi 1 secureFooterButton có 3 nút bấm  là 1. Đăng ký 2. Đăng nhập 3. Đăng xuất
     );
   }
 }
-
-// Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("${widget.MSV}"),
-//         automaticallyImplyLeading: false,
-//       ),
-
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: data.length,
-//               itemBuilder: (context, index) {
-//                 return Card(
-//                   child: ListTile(
-//                     title: Text('${data[index].TENPHONGHOC}'),
-//                     subtitle: Text('${data[index].SOTIET}'),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
