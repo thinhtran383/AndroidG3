@@ -59,7 +59,6 @@ class _loginState extends State<login> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 30),
-                
                 child: TextField(
                   style: TextStyle(
                     fontSize: 20,
@@ -74,7 +73,7 @@ class _loginState extends State<login> {
                       fontSize: 20,
                     ),
                   ),
-                   keyboardType: TextInputType.visiblePassword,
+                  keyboardType: TextInputType.visiblePassword,
                 ),
               ),
               Padding(
@@ -90,14 +89,12 @@ class _loginState extends State<login> {
                       controller: _passwordController,
                       obscureText: !_isHidden,
                       decoration: InputDecoration(
-                        
                         errorText: _passInvalid ? _passwordError : null,
                         labelText: "Password",
                         labelStyle: TextStyle(
                           color: Colors.grey,
                           fontSize: 20,
                         ),
-                        
                       ),
                       keyboardType: TextInputType.visiblePassword,
                     ),
@@ -147,11 +144,12 @@ class _loginState extends State<login> {
 
   void onSignIn() {
     setState(() {
-      if (double.tryParse(_usernameController.text) == null &&
-          _usernameController.text.length == 8 ) {
-        _useInvalid = true;
-      } else {
+      if (RegExp(r'^\d{8}$').hasMatch(_usernameController.text)) {
+        // Username is valid
         _useInvalid = false;
+      } else {
+        // Username is invalid
+        _useInvalid = true;
       }
 
       if (_passwordController.text.length < 6) {
@@ -162,7 +160,10 @@ class _loginState extends State<login> {
       if (!_useInvalid && !_passInvalid) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => home( MSV: _usernameController.text,)),
+          MaterialPageRoute(
+              builder: (context) => home(
+                    MSV: _usernameController.text,
+                  )),
         );
       }
     });
