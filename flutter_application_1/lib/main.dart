@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    // home: login(),
-      home: home(MSV: '21010627',),
+    home: login(),
+      // home: home(MSV: '21010627',),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -27,29 +27,3 @@ class MyApp extends StatelessWidget {
 
 
 
-// Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("${widget.MSV}"),
-//         automaticallyImplyLeading: false,
-//       ),
-      
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: data.length,
-//               itemBuilder: (context, index) {
-//                 return Card(
-//                   child: ListTile(
-//                     title: Text('${data[index].TENPHONGHOC}'),
-//                     subtitle: Text('${data[index].SOTIET}'),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
