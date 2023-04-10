@@ -74,6 +74,7 @@ class _loginState extends State<login> {
                       fontSize: 20,
                     ),
                   ),
+                   keyboardType: TextInputType.visiblePassword,
                 ),
               ),
               Padding(
@@ -89,13 +90,16 @@ class _loginState extends State<login> {
                       controller: _passwordController,
                       obscureText: !_isHidden,
                       decoration: InputDecoration(
+                        
                         errorText: _passInvalid ? _passwordError : null,
                         labelText: "Password",
                         labelStyle: TextStyle(
                           color: Colors.grey,
                           fontSize: 20,
                         ),
+                        
                       ),
+                      keyboardType: TextInputType.visiblePassword,
                     ),
                     GestureDetector(
                       onTap: onShowHide,

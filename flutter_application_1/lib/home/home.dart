@@ -29,19 +29,61 @@ class _homeState extends State<home> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  
+Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         automaticallyImplyLeading: false,
         title: Text("${widget.MSV}"),
-       
+        automaticallyImplyLeading: false,
       ),
-      body: Column(),
       
-      
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text('${data[index].TENPHONGHOC}, ${data[index].THU}'),
+                    subtitle: Text('${data[index].SOTIET}'),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
 
 
+
+// Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("${widget.MSV}"),
+//         automaticallyImplyLeading: false,
+//       ),
+      
+//       body: Column(
+//         children: [
+//           Expanded(
+//             child: ListView.builder(
+//               itemCount: data.length,
+//               itemBuilder: (context, index) {
+//                 return Card(
+//                   child: ListTile(
+//                     title: Text('${data[index].TENPHONGHOC}'),
+//                     subtitle: Text('${data[index].SOTIET}'),
+//                   ),
+//                 );
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
