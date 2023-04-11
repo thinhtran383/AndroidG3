@@ -120,6 +120,7 @@ class Body extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: SingleChildScrollView(
+                   physics: ClampingScrollPhysics(),
                   child: ListView(
                    physics: NeverScrollableScrollPhysics(),
                    
