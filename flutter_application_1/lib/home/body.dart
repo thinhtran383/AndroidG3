@@ -30,6 +30,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double displayWidth = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
         Expanded(
@@ -118,7 +119,7 @@ class Body extends StatelessWidget {
               }
 
               return Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                 child: SingleChildScrollView(
                    physics: ClampingScrollPhysics(),
                   child: ListView(
@@ -128,10 +129,14 @@ class Body extends StatelessWidget {
                     children: [
                       Row(
                         children: [
+                          
                           Expanded(
+                            
                             child: Padding(
+                              
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Container(
+                               
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(8.0),
@@ -159,7 +164,7 @@ class Body extends StatelessWidget {
                                         Text('${data[index].TENHOCPHAN}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 17.0,
+                                              fontSize: 15.0,
                                               color:
                                                   Color.fromRGBO(30, 30, 30, 1.0),
                                             )),
@@ -182,7 +187,7 @@ class Body extends StatelessWidget {
                                             style: TextStyle(
                                               color:
                                                   Color.fromRGBO(30, 30, 30, 1.0),
-                                              fontSize: 20.0,
+                                              fontSize: 17.0,
                                             )),
                                         Text('${gioKetThuc}',
                                             textAlign: TextAlign.center,
