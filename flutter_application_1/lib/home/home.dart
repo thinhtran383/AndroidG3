@@ -19,6 +19,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   List<Data> data = [];
+  
 
   @override
   void initState() {

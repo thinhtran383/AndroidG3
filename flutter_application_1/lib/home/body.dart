@@ -7,6 +7,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../model/data/data.dart';
 import '../network/network_request.dart';
+import 'canhan.dart';
+import 'homediem.dart';
 
 class Body extends StatelessWidget {
   List<dynamic> time = [
@@ -31,6 +33,9 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double displayWidth = MediaQuery.of(context).size.width;
+   
+
+
     return Column(
       children: <Widget>[
         Expanded(
