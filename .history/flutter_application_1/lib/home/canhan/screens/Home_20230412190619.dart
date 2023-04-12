@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: null,
       body: Stack(
         children: [
@@ -93,7 +92,9 @@ class _HomeState extends State<Home> {
               child: Align(
                 // chinhs vi tri cua button va textfield
                 alignment: Alignment.bottomCenter,
-                child: Row(children: <Widget>[
+                child: SingleChildScrollView(
+                   padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.bottom),
+                    child: Row(children: <Widget>[
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(bottom: 25, right: 25, left: 25),
@@ -171,6 +172,11 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ]),
+                )
+                
+                
+                
+                
               ))
         ],
       ),

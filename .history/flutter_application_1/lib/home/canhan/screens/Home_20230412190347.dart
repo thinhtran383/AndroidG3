@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: null,
       body: Stack(
         children: [
@@ -183,13 +182,14 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   setState(() {
                     _isAddingEvent = true;
+                    
                   });
                 },
                 child: Icon(Icons.add, color: Colors.white),
                 backgroundColor: Colors.blue,
               ),
       ),
-      // vị trí của nút thêm lịch
+    // vị trí của nút thêm lịch
     );
   }
 
@@ -292,13 +292,15 @@ class _HomeState extends State<Home> {
     int seconds = difference.inHours;
 
     setState(() {
-      _isAddingEvent = false;
+      _isAddingEvent=false;
 
       todoList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
         isDate: seconds,
         date: datenow,
+
+        
       ));
     });
     String nowid = DateTime.now().millisecondsSinceEpoch.toString();
