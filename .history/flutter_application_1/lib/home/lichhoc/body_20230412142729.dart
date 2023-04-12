@@ -135,9 +135,8 @@ class Body extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(8.0),
-                                  color: Colors.white,
                                 ),
-                                
+                                Colors.white
                                 padding: EdgeInsets.all(16.0),
                                 child: Row(
                                   mainAxisAlignment:

@@ -88,96 +88,11 @@ class _HomeState extends State<Home> {
             ),
           ),
         ],
-        
-      
       ),
-    //   _isAddingEvent  ? Align(
-    //    // chinhs vi tri cua button va textfield
-    //    alignment: Alignment.bottomCenter,
-    //    child: Row(children: <Widget>[
-    //      Expanded(
-    //        child: Container(
-    //          margin: EdgeInsets.only(bottom: 25, right: 25, left: 25),
-    //          decoration: BoxDecoration(
-    //            color: Colors.blueGrey[100],
-    //            boxShadow: [
-    //              BoxShadow(
-    //                color: Colors.grey,
-    //                spreadRadius: 0,
-    //                blurRadius: 10,
-    //                offset: Offset.zero,
-    //              ),
-    //            ],
-    //            borderRadius: BorderRadius.circular(10),
-    //          ),
-    //          child: Expanded(
-    //            child: Stack(
-    //              children: <Widget>[
-    //                TextField(
-    //                  controller: todoController,
-    //                  decoration: InputDecoration(
-    //                    hintText: "Add new task",
-    //                    hintStyle: TextStyle(
-    //                      color: Colors.black,
-    //                      fontSize: 16,
-    //                    ),
-    //                    border: InputBorder.none,
-    //                    contentPadding: EdgeInsets.symmetric(
-    //                        horizontal: 20, vertical: 20),
-    //                  ),
-    //                ),
-    //                Row(
-    //                  crossAxisAlignment: CrossAxisAlignment.end,
-    //                  mainAxisAlignment: MainAxisAlignment.end,
-    //                  children: [
-    //                    SizedBox(
-    //                      height: 50,
-    //                      child: Positioned(
-    //                          bottom: 9,
-    //                          right: 60,
-    //                          child: IconButton(
-    //                            onPressed: () {
-    //                              _selectDate(context);
-    //                            },
-    //                            icon: Icon(
-    //                              Icons.calendar_month,
-    //                              color: Colors.black,
-    //                              size: 25,
-    //                            ),
-    //                          )),
-    //                    ),
-    //                    SizedBox(
-    //                      width: 20,
-    //                    ),
-    //                    SizedBox(
-    //                      height: 50,
-    //                      child: Positioned(
-    //                        child: IconButton(
-    //                          onPressed: () {
-    //                            _addToDoItem(todoController.text);
-    //                          },
-    //                          icon: Icon(
-    //                            Icons.add,
-    //                            color: Colors.black,
-    //                            size: 25,
-    //                          ),
-    //                        ),
-    //                      ),
-    //                    ),
-    //                  ],
-    //                ),
-    //              ],
-    //            ),
-    //          ),
-    //        ),
-    //      ),
-    //    ]),
-    //  ) : null,
+
+      _isAddingEvent  ? : ,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-           setState(() {
-                  _isAddingEvent = true;
-                });
           // xử lý khi nhấn nút thêm lịch
         },
         child: Icon(Icons.add,color: Colors.white,),
@@ -191,7 +106,6 @@ class _HomeState extends State<Home> {
   void onClickToDoItemDone(ToDo todo) {
     setState(() {
       // check box
-      
       todo.isDone = !todo.isDone;
     });
 
@@ -337,3 +251,4 @@ class _HomeState extends State<Home> {
 
 
 
+// 
