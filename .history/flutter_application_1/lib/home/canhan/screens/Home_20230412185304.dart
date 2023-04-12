@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
                       Container(
                         margin: EdgeInsets.only(top: 20, bottom: 20),
                         child: Text(
-                          "ToDo",
+                          "ToDo List",
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
@@ -284,7 +284,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  void _addToDoItem(String toDo) {
+  void _addToDoItem(String toDo , bool  bool _isAddingEvent = false;) {
     DateTime now = DateTime.now();
     DateTime seletedDate = currentDate;
     String datenow = DateFormat('dd-MM-yyyy').format(currentDate);
@@ -292,8 +292,6 @@ class _HomeState extends State<Home> {
     int seconds = difference.inHours;
 
     setState(() {
-      _isAddingEvent=false;
-
       todoList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,

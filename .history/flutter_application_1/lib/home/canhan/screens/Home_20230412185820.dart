@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
               visible: _isAddingEvent,
               child: Align(
                 // chinhs vi tri cua button va textfield
-                alignment: Alignment.bottomCenter,
+                // alignment: Alignment.bottomCenter,
                 child: Row(children: <Widget>[
                   Expanded(
                     child: Container(
