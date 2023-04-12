@@ -159,7 +159,7 @@ class Body extends StatelessWidget {
                                         Text('${data[index].TENHOCPHAN}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 17.0,
+                                              fontSize: 15.0,
                                               color:
                                                   Color.fromRGBO(30, 30, 30, 1.0),
                                             )),
@@ -182,7 +182,7 @@ class Body extends StatelessWidget {
                                             style: TextStyle(
                                               color:
                                                   Color.fromRGBO(30, 30, 30, 1.0),
-                                              fontSize: 20.0,
+                                              fontSize: 18.0,
                                             )),
                                         Text('${gioKetThuc}',
                                             textAlign: TextAlign.center,

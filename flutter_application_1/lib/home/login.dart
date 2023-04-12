@@ -158,7 +158,7 @@ class _loginState extends State<login> {
         _passInvalid = false;
       }
       if (!_useInvalid && !_passInvalid) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => home(
