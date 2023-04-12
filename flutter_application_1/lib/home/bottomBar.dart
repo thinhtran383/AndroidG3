@@ -1,18 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+typedef void CurrentIndexChangedCallback(int currentIndex);
 class bottomBar extends StatefulWidget {
-  const bottomBar({super.key});
-
+  const bottomBar({
+    Key? key,
+    required this.onCurrentIndexChanged, 
+  }) : super(key: key);
+  
+  final CurrentIndexChangedCallback onCurrentIndexChanged;
   @override
   State<bottomBar> createState() => _bottomBarState();
 }
 
 class _bottomBarState extends State<bottomBar> {
    var currentIndex = 0;
+   
+
+   
   @override
   Widget build(BuildContext context) {
      double displayWidth = MediaQuery.of(context).size.width;
@@ -39,6 +48,7 @@ class _bottomBarState extends State<bottomBar> {
               setState(() {
                 currentIndex = index;
                 HapticFeedback.lightImpact();
+                 widget.onCurrentIndexChanged(currentIndex);
               });
             },
             splashColor: Colors.transparent,

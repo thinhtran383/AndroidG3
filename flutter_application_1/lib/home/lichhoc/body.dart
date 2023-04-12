@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../model/data/data.dart';
-import '../network/network_request.dart';
+import '../../model/data/data.dart';
+import '../../network/network_request.dart';
 
 class Body extends StatelessWidget {
   List<dynamic> time = [
