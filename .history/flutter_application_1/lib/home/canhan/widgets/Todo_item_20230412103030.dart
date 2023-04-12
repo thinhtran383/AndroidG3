@@ -19,7 +19,6 @@ class ToDoItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: ListTile(
-        
         onTap: () {
           onToDoChanged(todo); //
         },
@@ -32,7 +31,6 @@ class ToDoItem extends StatelessWidget {
           color: tdBlue,
         ),
         title: Row(
-          
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(

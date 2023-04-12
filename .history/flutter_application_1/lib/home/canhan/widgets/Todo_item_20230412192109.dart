@@ -32,7 +32,6 @@ class ToDoItem extends StatelessWidget {
           color: tdBlue,
         ),
         title: Row(
-          
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
