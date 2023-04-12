@@ -29,10 +29,53 @@ class _HomeState extends State<Home> {
     foundToDo = todoList;
 
     super.initState();
-  
   }
 
- 
+   Future<void> add(ToDo todo) async {
+  // Lấy đối tượng SharedPreferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Lấy danh sách to-do đã lưu từ Shared Preferences
+  List<String>? todos = prefs.getStringList('todo');
+
+  // Nếu chưa có danh sách to-do, tạo mới một danh sách trống
+  if (todos == null) {
+    todos = [];
+  }
+
+  
+
+  // Thêm to-do mới vào danh sách
+  todos.add(jsonEncode(todo.toJson()));
+
+  // Lưu danh sách to-do mới vào Shared Preferences
+  await prefs.setStringList('todos', todos);
+}
+
+Future<void> delete(int id) async {
+  // Lấy đối tượng SharedPreferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Lấy danh sách to-do đã lưu từ Shared Preferences
+  List<String>? todos = prefs.getStringList('todos');
+
+  // Nếu có danh sách to-do, tìm và xóa to-do có id tương ứng
+  if (todos != null) {
+    todos.removeWhere((todoJson) {
+      ToDo todo = ToDo.fromJson(jsonDecode(todoJson));
+      return todo.id == id;
+    });
+
+    // Lưu danh sách to-do mới vào Shared Preferences
+    await prefs.setStringList('todos', todos);
+  }
+}
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +341,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       _isAddingEvent = false;
-     
+
       todoList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
@@ -306,7 +349,8 @@ class _HomeState extends State<Home> {
         date: datenow,
       ));
     });
-
+   
+    
     todoController.clear();
   }
 

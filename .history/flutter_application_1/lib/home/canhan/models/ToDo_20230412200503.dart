@@ -26,12 +26,11 @@ class ToDo {
 
   factory ToDo.fromJson(Map<String, dynamic> json) {
     return ToDo(
-      id: json['id'] as String,
+      id: json['id'] as int,
       contentTodo: json['contentTodo'] as String,
-      date: json['date'] as String,
+      date: DateTime.parse(json['date'] as String),
       isDone: json['isDone'] as bool,
       dateDone: json['dateDone'] as bool,
-       isDate: null,
     );
   }
    Map<String, dynamic> toJson() {

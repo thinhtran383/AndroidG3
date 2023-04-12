@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
@@ -15,13 +13,7 @@ class ToDoItem extends StatelessWidget {
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
-  
 
-
-
-
-
-// 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +26,7 @@ class ToDoItem extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        tileColor: Colors.white,
+        tileColor: Colors.white,z
         leading: Icon(
           todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
           color: tdBlue,

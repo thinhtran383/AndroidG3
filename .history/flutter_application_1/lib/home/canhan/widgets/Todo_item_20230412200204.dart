@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
 import '../models/ToDo.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
@@ -15,7 +15,47 @@ class ToDoItem extends StatelessWidget {
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
+    Future<void> add(ToDo todo) async {
+  // Lấy đối tượng SharedPreferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Lấy danh sách to-do đã lưu từ Shared Preferences
+  List<String>? todos = prefs.getStringList('todo');
+
+  // Nếu chưa có danh sách to-do, tạo mới một danh sách trống
+  if (todo == null) {
+    todos = [];
+  }
+
   
+
+  // Thêm to-do mới vào danh sách
+  todos.add(jsonEncode(todo.toJson()));
+
+  // Lưu danh sách to-do mới vào Shared Preferences
+  await prefs.setStringList('todos', todos);
+}
+
+Future<void> delete(int id) async {
+  // Lấy đối tượng SharedPreferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Lấy danh sách to-do đã lưu từ Shared Preferences
+  List<String>? todos = prefs.getStringList('todos');
+
+  // Nếu có danh sách to-do, tìm và xóa to-do có id tương ứng
+  if (todos != null) {
+    todos.removeWhere((todoJson) {
+      ToDo todo = ToDo.fromJson(jsonDecode(todoJson));
+      return todo.id == id;
+    });
+
+    // Lưu danh sách to-do mới vào Shared Preferences
+    await prefs.setStringList('todos', todos);
+  }
+}
+
+
 
 
 

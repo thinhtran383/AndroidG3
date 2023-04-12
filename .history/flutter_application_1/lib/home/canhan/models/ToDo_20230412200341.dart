@@ -13,7 +13,7 @@ class ToDo {
     this.isLate = false,
     this.dateDone = false,
     required this.isDate,
-    required this.date,
+    required this.,
   });
 
   static List<ToDo> todoList() {
@@ -23,22 +23,11 @@ class ToDo {
       ToDo(id: "2", contentTodo: "Buy eggs", isDone: false, isDate: 0,date: "21-11-2021"),
     ];
   }
-
-  factory ToDo.fromJson(Map<String, dynamic> json) {
-    return ToDo(
-      id: json['id'] as String,
-      contentTodo: json['contentTodo'] as String,
-      date: json['date'] as String,
-      isDone: json['isDone'] as bool,
-      dateDone: json['dateDone'] as bool,
-       isDate: null,
-    );
-  }
    Map<String, dynamic> toJson() {
     return {
       'id': id,
       'contentTodo': contentTodo,
-      'date': date.toString(),
+      'date': date.toIso8601String(),
       'isDone': isDone,
       'dateDone': dateDone,
     };

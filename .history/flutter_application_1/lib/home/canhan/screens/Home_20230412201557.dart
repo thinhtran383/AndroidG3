@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,7 +5,7 @@ import '../models/ToDo.dart';
 import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
 import '../widgets/Todo_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'dart:async';
 
 class Home extends StatefulWidget {
@@ -29,10 +27,7 @@ class _HomeState extends State<Home> {
     foundToDo = todoList;
 
     super.initState();
-  
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +293,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       _isAddingEvent = false;
-     
+
       todoList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
@@ -306,7 +301,8 @@ class _HomeState extends State<Home> {
         date: datenow,
       ));
     });
-
+   
+    
     todoController.clear();
   }
 

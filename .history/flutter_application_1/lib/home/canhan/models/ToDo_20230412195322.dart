@@ -24,25 +24,5 @@ class ToDo {
     ];
   }
 
-  factory ToDo.fromJson(Map<String, dynamic> json) {
-    return ToDo(
-      id: json['id'] as String,
-      contentTodo: json['contentTodo'] as String,
-      date: json['date'] as String,
-      isDone: json['isDone'] as bool,
-      dateDone: json['dateDone'] as bool,
-       isDate: null,
-    );
-  }
-   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'contentTodo': contentTodo,
-      'date': date.toString(),
-      'isDone': isDone,
-      'dateDone': dateDone,
-    };
-  }
-
   
 }

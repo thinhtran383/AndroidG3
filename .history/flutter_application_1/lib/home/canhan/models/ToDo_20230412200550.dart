@@ -30,8 +30,7 @@ class ToDo {
       contentTodo: json['contentTodo'] as String,
       date: json['date'] as String,
       isDone: json['isDone'] as bool,
-      dateDone: json['dateDone'] as bool,
-       isDate: null,
+      dateDone: json['dateDone'] as bool, isDate: null,
     );
   }
    Map<String, dynamic> toJson() {

@@ -15,19 +15,14 @@ class ToDoItem extends StatelessWidget {
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
-  
+//
 
-
-
-
-
-// 
+//
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: ListTile(
-        
         onTap: () {
           onToDoChanged(todo); //
         },
@@ -40,7 +35,6 @@ class ToDoItem extends StatelessWidget {
           color: tdBlue,
         ),
         title: Row(
-          
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
@@ -59,7 +53,6 @@ class ToDoItem extends StatelessWidget {
                 Text(
                   todo.date.toString(),
                   style: TextStyle(
-
                     fontSize: 10,
                     color: todo.dateDone ? tdRed : tdBlack,
                     decoration: todo.isDone ? TextDecoration.lineThrough : null,

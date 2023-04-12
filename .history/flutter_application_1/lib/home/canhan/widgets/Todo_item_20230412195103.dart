@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
 import '../models/ToDo.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
@@ -15,13 +13,11 @@ class ToDoItem extends StatelessWidget {
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
-  
-
-
-
-
-
-// 
+Future<void> saveToDoList(List<ToDo> toDoList) async {
+  final prefs = await SharedPreferences.getInstance();
+  final json = jsonEncode(toDoList.map((todo) => todo.toJson()).toList());
+  await prefs.setString('toDoList', json);
+}
   @override
   Widget build(BuildContext context) {
     return Container(

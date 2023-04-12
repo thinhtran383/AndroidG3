@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
 import '../models/ToDo.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
@@ -15,12 +15,14 @@ class ToDoItem extends StatelessWidget {
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
-  
 
 
 
 
 
+
+
+      
 // 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -29,10 +27,22 @@ class _HomeState extends State<Home> {
     foundToDo = todoList;
 
     super.initState();
-  
   }
 
- 
+ Future<void> _loadTodos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? todos = prefs.getStringList('todos');
+
+    if (todos != null) {
+      setState(() {
+        _todos = todos.map((todoJson) => ToDo.fromJson(jsonDecode(todoJson))).toList();
+      });
+    }
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +308,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       _isAddingEvent = false;
-     
+
       todoList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
@@ -306,7 +316,8 @@ class _HomeState extends State<Home> {
         date: datenow,
       ));
     });
-
+   
+    
     todoController.clear();
   }
 

@@ -298,7 +298,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       _isAddingEvent = false;
-     
+      add(toDo as ToDo);
       todoList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,

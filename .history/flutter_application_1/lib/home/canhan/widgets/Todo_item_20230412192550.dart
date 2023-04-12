@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
@@ -15,13 +13,7 @@ class ToDoItem extends StatelessWidget {
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
-  
 
-
-
-
-
-// 
   @override
   Widget build(BuildContext context) {
     return Container(
