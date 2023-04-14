@@ -31,8 +31,14 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     foundToDo = tasksBox.values.toList();
-
+    toDoListDone = tasksBox.values.where((todo) => todo.isDone).toList();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tasksBox.close();
+    super.dispose();
   }
 
   @override
@@ -199,46 +205,50 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void onClickToDoItemDone(todo todo) {
+  void onClickToDoItemDone(todo todo1) {
     setState(() {
-      todo.isDone = !todo.isDone;
+      todo1.isDone = !todo1.isDone;
     });
 
-    if (todo.isDone == true) {
+    if (todo1.isDone) {
       setState(() {
-        todo.isDone = true;
-        toDoListDone.add(todo);
-        todoList.removeWhere((todo) => todo.isDone == true);
-        var todoToDelete =
-            tasksBox.values.firstWhere((todo1) => todo1.id == todo.id);
-        if (todoToDelete != null) {
-          tasksBox.delete(todoToDelete.key);
-        }
-        foundToDo = tasksBox.values.toList();
+        todo1.isDone = true;
+        // Xóa phần tử có isDone == true khỏi tasksBox và thêm vào toDoListDone
+        var todoToDelete = foundToDo.firstWhere(
+          (todo2) => todo2.isDone == true,
+        );
+
+        toDoListDone.add(todo1);
+        foundToDo.remove(todoToDelete);
       });
     } else {
       setState(() {
-        todo.isDone = false;
-        // todoList.add(todo);
-        tasksBox.add(todo);
-        toDoListDone.removeWhere((todo) => todo.isDone == false);
+        todo1.isDone = false;
+        // Xóa phần tử có isDone == true khỏi tasksBox và thêm vào toDoListDone
+        var todoToDelete = toDoListDone.firstWhere(
+          (todo2) => todo2.isDone == false,
+        );
+
+        toDoListDone.remove(todoToDelete);
+        foundToDo.add(todo1);
       });
     }
+    ;
   }
 
   void onClickTodoItem(todo todo) {
     setState(() {
-      if (todo.isDone == true) {
-        todo.isDone = false;
-      } else {
-        todo.isDone = true;
-      }
+      todo.isDone = !todo.isDone;
     });
 
-    if (todo.isDone == true) {
+    if (todo.isDone) {
       // toDoListDone.add(todo);
       setState(() {
-        todoList.removeWhere((todoo) => todoo.id == todo.id);
+        todo.isDone = true;
+
+        toDoListDone.add(todo);
+
+        foundToDo.removeWhere((todo1) => todo1.isDone == true);
       });
 
       ScaffoldMessenger.of(context).showSnackBar(// hien thi thong bao
@@ -262,14 +272,8 @@ class _HomeState extends State<Home> {
 
   void onClickDeleteIcon(String id) {
     setState(() {
-      var todoToDelete = tasksBox.values.firstWhere((todo) => todo.id == id);
-      if (todoToDelete != null) {
-        tasksBox.delete(todoToDelete.key);
-      }
-      foundToDo = tasksBox.values.toList();
-
-      todoList.removeWhere((todoo) => todoo.id == id);
-      toDoListDone.removeWhere((todoo) => todoo.id == id);
+      foundToDo.removeWhere((todo) => todo.id == id);
+      toDoListDone.removeWhere((todo) => todo.id == id);
     });
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -311,25 +315,17 @@ class _HomeState extends State<Home> {
     String datenow = DateFormat('dd-MM-yyyy').format(currentDate);
     Duration difference = seletedDate.difference(now);
     int seconds = difference.inHours;
-    tasksBox.put(
-        DateTime.now().millisecondsSinceEpoch.toString(),
-        todo(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          contentTodo: toDo,
-          isDate: seconds,
-          date: datenow,
-        ));
+
     setState(() {
       _isAddingEvent = false;
-
-      todoList.add(todo(
+      foundToDo.add(todo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
         isDate: seconds,
         date: datenow,
       ));
 
-      foundToDo = tasksBox.values.toList();
+      // foundToDo = tasksBox.values.toList();
     });
 
     todoController.clear();

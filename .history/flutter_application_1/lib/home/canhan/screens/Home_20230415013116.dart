@@ -200,22 +200,21 @@ class _HomeState extends State<Home> {
   }
 
   void onClickToDoItemDone(todo todo) {
- 
-      setState(() {
-todo.isDone = !todo.isDone;
-      });
-    
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
 
     if (todo.isDone == true) {
       setState(() {
         todo.isDone = true;
         toDoListDone.add(todo);
         todoList.removeWhere((todo) => todo.isDone == true);
-          var todoToDelete = tasksBox.values.firstWhere((todo1) => todo1.id == todo.id);
-      if (todoToDelete != null) {
-        tasksBox.delete(todoToDelete.key);
-      }
-      foundToDo = tasksBox.values.toList();
+        var todoToDelete =
+            tasksBox.values.firstWhere((todo1) => todo1.id == todo.id);
+        if (todoToDelete != null) {
+          tasksBox.delete(todoToDelete.key);
+        }
+        foundToDo = tasksBox.values.toList();
       });
     } else {
       setState(() {
