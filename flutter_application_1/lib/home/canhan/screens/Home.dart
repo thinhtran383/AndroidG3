@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
+import 'package:hive/hive.dart';
+
 import '../models/ToDo.dart';
 import '../models/Todo_box.dart';
 import '../widgets/AppBar.dart';
@@ -21,24 +23,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool _isAddingEvent = false;
-  final todoList = todo.todoList();
+  // final todoList = todo.todoList();
 
   final todoController = TextEditingController();
   List<todo> foundToDo = [];
-  List<todo> toDoListDone = [];
+
   final tasksBox = Hive.box<todo>('tasks');
 
   @override
   void initState() {
     foundToDo = tasksBox.values.toList();
 
-    toDoListDone = tasksBox.values.where((todo) => todo.isDone).toList();
-
     tasksBox.watch().listen((event) {
       foundToDo = tasksBox.values.toList();
-      toDoListDone = tasksBox.values.where((todo) => todo.isDone).toList();
-      setState(() {});
     });
+    // tasksBox.clear();
 
     super.initState();
   }
@@ -75,13 +74,13 @@ class _HomeState extends State<Home> {
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      for (todo todo1
-                          in foundToDo.reversed) // in ra danh sach todo
-                        ToDoItem(
-                          todo1: todo1,
-                          onToDoChanged: onClickTodoItem,
-                          onToDoDeleted: onClickDeleteIcon,
-                        ),
+                      for (todo todo1 in foundToDo.reversed)
+                        if (todo1.hienthi == true)
+                          ToDoItem(
+                            todo1: todo1,
+                            onToDoChanged: onClickTodoItem,
+                            onToDoDeleted: onClickDeleteIcon,
+                          ),
                       ListView(
                         shrinkWrap: true,
                         children: [
@@ -95,13 +94,13 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      for (todo todo1
-                          in toDoListDone.reversed) // in ra danh sach todo
-                        ToDoItem(
-                          todo1: todo1,
-                          onToDoChanged: onClickToDoItemDone,
-                          onToDoDeleted: onClickDeleteIcon,
-                        ),
+                      for (todo todo1 in foundToDo.reversed)
+                        if (todo1.hienthi == false)
+                          ToDoItem(
+                            todo1: todo1,
+                            onToDoChanged: onClickToDoItemDone,
+                            onToDoDeleted: onClickDeleteIcon,
+                          ),
                     ],
                   ),
                 )
@@ -218,29 +217,21 @@ class _HomeState extends State<Home> {
       todo1.isDone = !todo1.isDone;
     });
 
-    if (todo1.isDone) {
+    if (todo1.isDone ==false) {
       setState(() {
-        todo1.isDone = true;
-        var todoToDelete = tasksBox.values.firstWhere(
-          (todo2) => todo2.isDone == true,
-        );
-        tasksBox.delete(todoToDelete.key);
-        toDoListDone.add(todoToDelete);
-      });
-    } else {
-      setState(() {
+        
+        for (var todo1 in foundToDo) {
+          if (todo1.isDone == false) {
+            todo1.hienthi = true;
+            tasksBox.put(todo1.key, todo1);
+          }
+         
+        }
         todo1.isDone = false;
-        // Xóa phần tử có isDone == true khỏi tasksBox và thêm vào toDoListDone
-        var todoToDelete = toDoListDone.firstWhere(
-          (todo2) => todo2.isDone == false,
-        );
-        tasksBox.add(todoToDelete);
-        toDoListDone.remove(todoToDelete);
-        // foundToDo.add(todo1);
-        //  foundToDo = tasksBox.values.toList();
       });
     }
-    ;
+
+    
   }
 
   void onClickTodoItem(todo todo) {
@@ -249,20 +240,17 @@ class _HomeState extends State<Home> {
     });
 
     if (todo.isDone) {
-      // toDoListDone.add(todo);
+     
       setState(() {
-        todo.isDone = true;
-
-        toDoListDone.add(todo);
-
-        for (var todo1 in toDoListDone) {
-          if (todo1.isDone == true) {
-            tasksBox.delete(todo.key);
+        for (var todo1 in foundToDo) {
+          if (todo1.isDone == true && todo1.id == todo.id) {
+            todo1.hienthi = false;
+            tasksBox.put(todo1.key, todo1);
           }
         }
-        // foundToDo.removeWhere((todo1) => todo1.isDone == true);
+        todo.isDone = true;
 
-        foundToDo = tasksBox.values.toList();
+       
       });
 
       ScaffoldMessenger.of(context).showSnackBar(// hien thi thong bao
@@ -284,16 +272,14 @@ class _HomeState extends State<Home> {
     }
   }
 
-  void onClickDeleteIcon(String id) {
+
+
+  void onClickDeleteIcon(todo id) {
     setState(() {
-      print('object');
-      for (var todo in foundToDo) {
-        if (todo.id == id) {
-          tasksBox.delete(todo.key);
-        }
-      }
-      foundToDo = tasksBox.values.toList();
-      toDoListDone.removeWhere((todo) => todo.id == id);
+
+
+      tasksBox.delete(id.key);
+  
     });
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -343,9 +329,10 @@ class _HomeState extends State<Home> {
         contentTodo: toDo,
         isDate: seconds,
         date: datenow,
+        hienthi: true,
       ));
 
-      foundToDo = tasksBox.values.toList();
+     
     });
 
     todoController.clear();
@@ -355,9 +342,9 @@ class _HomeState extends State<Home> {
     List<todo> result = [];
     if (query.isEmpty) {
       // neu khong co gi thi khong lam gi ca
-      result = todoList;
+      result = tasksBox.values.toList();
     } else {
-      result = todoList
+      result = tasksBox.values
           .where((todo) =>
               todo.contentTodo!.toLowerCase().contains(query.toLowerCase()))
           .toList();

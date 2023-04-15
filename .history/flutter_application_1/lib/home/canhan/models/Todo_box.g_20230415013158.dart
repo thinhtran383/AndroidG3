@@ -21,7 +21,7 @@ class todoAdapter extends TypeAdapter<todo> {
       isDone: fields[3] as bool,
       contentTodo: fields[1] as String?,
       isLate: fields[5] as bool,
-      dateDone: fields[6] as bool?,
+      dateDone: fields[6] as bool,
       isDate: fields[4] as int?,
       date: fields[2] as String?,
     );
