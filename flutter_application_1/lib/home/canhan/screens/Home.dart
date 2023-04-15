@@ -31,7 +31,15 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     foundToDo = tasksBox.values.toList();
+
     toDoListDone = tasksBox.values.where((todo) => todo.isDone).toList();
+
+    tasksBox.watch().listen((event) {
+      foundToDo = tasksBox.values.toList();
+      toDoListDone = tasksBox.values.where((todo) => todo.isDone).toList();
+      setState(() {});
+    });
+
     super.initState();
   }
 
@@ -213,13 +221,11 @@ class _HomeState extends State<Home> {
     if (todo1.isDone) {
       setState(() {
         todo1.isDone = true;
-        // Xóa phần tử có isDone == true khỏi tasksBox và thêm vào toDoListDone
-        var todoToDelete = foundToDo.firstWhere(
+        var todoToDelete = tasksBox.values.firstWhere(
           (todo2) => todo2.isDone == true,
         );
-
-        toDoListDone.add(todo1);
-        foundToDo.remove(todoToDelete);
+        tasksBox.delete(todoToDelete.key);
+        toDoListDone.add(todoToDelete);
       });
     } else {
       setState(() {
@@ -228,9 +234,10 @@ class _HomeState extends State<Home> {
         var todoToDelete = toDoListDone.firstWhere(
           (todo2) => todo2.isDone == false,
         );
-
+        tasksBox.add(todoToDelete);
         toDoListDone.remove(todoToDelete);
-        foundToDo.add(todo1);
+        // foundToDo.add(todo1);
+        //  foundToDo = tasksBox.values.toList();
       });
     }
     ;
@@ -248,7 +255,14 @@ class _HomeState extends State<Home> {
 
         toDoListDone.add(todo);
 
-        foundToDo.removeWhere((todo1) => todo1.isDone == true);
+        for (var todo1 in toDoListDone) {
+          if (todo1.isDone == true) {
+            tasksBox.delete(todo.key);
+          }
+        }
+        // foundToDo.removeWhere((todo1) => todo1.isDone == true);
+
+        foundToDo = tasksBox.values.toList();
       });
 
       ScaffoldMessenger.of(context).showSnackBar(// hien thi thong bao
@@ -272,7 +286,13 @@ class _HomeState extends State<Home> {
 
   void onClickDeleteIcon(String id) {
     setState(() {
-      foundToDo.removeWhere((todo) => todo.id == id);
+      print('object');
+      for (var todo in foundToDo) {
+        if (todo.id == id) {
+          tasksBox.delete(todo.key);
+        }
+      }
+      foundToDo = tasksBox.values.toList();
       toDoListDone.removeWhere((todo) => todo.id == id);
     });
 
@@ -318,14 +338,14 @@ class _HomeState extends State<Home> {
 
     setState(() {
       _isAddingEvent = false;
-      foundToDo.add(todo(
+      tasksBox.add(todo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
         isDate: seconds,
         date: datenow,
       ));
 
-      // foundToDo = tasksBox.values.toList();
+      foundToDo = tasksBox.values.toList();
     });
 
     todoController.clear();
