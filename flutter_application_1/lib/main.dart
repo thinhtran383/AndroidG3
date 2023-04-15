@@ -10,14 +10,14 @@ import 'home/login.dart';
 import 'network/network_request.dart';
 
 late Box box;late Box boxdone;
-void main()  async{
+void main() async  {
 
 
    await Hive.initFlutter();
 
   Hive.registerAdapter<todo>(todoAdapter());
   box = await Hive.openBox<todo>("tasks");
-  boxdone = await Hive.openBox<todo>("tasksDone");
+
   runApp(const MyApp());
 }
 

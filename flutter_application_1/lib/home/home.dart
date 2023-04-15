@@ -3,9 +3,10 @@ import 'package:api/home/diemcanha/diem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:hive_flutter/adapters.dart';
 import '../model/data/data.dart';
 import '../network/network_request.dart';
+import 'canhan/models/Todo_box.dart';
 import 'lichhoc/body.dart';
 import 'bottomBar.dart';
 
@@ -21,10 +22,11 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   List<Data> data = [];
   int currentIndex = 0;
-
+  late Box<todo> box;
   @override
-  void initState() {
-    super.initState();
+  void initState()  {
+  
+   
     fetchData('79BE3FF1328F49A397E15EFAF4E83870', '03%2F03%2F2023',
             '09%2F04%2F2023')
         .then((value) {
@@ -34,7 +36,8 @@ class _homeState extends State<home> {
     });
   }
 
-  @override
+
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: null,

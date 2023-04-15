@@ -29,9 +29,10 @@ class _HomeState extends State<Home> {
   List<todo> foundToDo = [];
 
   final tasksBox = Hive.box<todo>('tasks');
-
+late Box<todo> box;
   @override
-  void initState() {
+  void initState()  {
+    
     foundToDo = tasksBox.values.toList();
 
     tasksBox.watch().listen((event) {
@@ -42,11 +43,11 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    tasksBox.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   tasksBox.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
