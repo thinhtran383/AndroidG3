@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:api/home/canhan/models/Todo_box.dart';
-import 'package:api/home/home.dart';
+import 'package:ClassPlanner/home/canhan/models/Todo_box.dart';
+import 'package:ClassPlanner/home/home.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    home: login(),
-      // home: home(MSV: '21010636',),
+    // home: login(),
+      home: home(MSV: '21010636',),
       debugShowCheckedModeBanner: false,
     );
   }

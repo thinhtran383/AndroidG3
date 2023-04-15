@@ -1,4 +1,4 @@
-import 'package:api/home/home.dart';
+import 'package:ClassPlanner/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
