@@ -12,10 +12,10 @@ import '../../network/network_request.dart';
 typedef void CurrentIndexChangedCallback(int currentIndex);
 class Body extends StatefulWidget {
   final List<Data> data;
-  late final int currentIndex;
-  Body({Key? key, required this.data, required this.onCurrentIndexChanged})
+  // late final int currentIndex;
+  Body({Key? key, required this.data })
       : super(key: key);
-       final CurrentIndexChangedCallback onCurrentIndexChanged;
+       
   @override
   State<Body> createState() => _BodyState();
 }
@@ -130,7 +130,7 @@ class _BodyState extends State<Body> {
                 onTap: () {
                   setState(() {
                     // Cập nhật giá trị tại thằng cha
-                    widget.onCurrentIndexChanged(index);
+                   
                   });
                 },
                 child: Padding(

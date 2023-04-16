@@ -28,7 +28,7 @@ class _homeState extends State<home> {
   late DateTime now;
 
   List<Data> data = [];
-  int currentIndex = -10;
+  int currentIndex = 0;
   late Box<todo> box;
   @override
   void initState() {
@@ -95,7 +95,28 @@ class _homeState extends State<home> {
           });
         });
         break;
-      case '':
+      case '21012870':
+        fetchData(
+                '43F82BDE32474B928ECC4B3648E3F439',
+                dayfirst < 10
+                    ? monthfirst > 10
+                        ? '0${dayfirst}%2F${monthfirst}%2F${yearfirst}'
+                        : '0${dayfirst}%2F0${monthfirst}%2F${yearfirst}'
+                    : monthfirst > 10
+                        ? '${dayfirst}%2F${monthfirst}%2F${yearfirst}'
+                        : '${dayfirst}%2F0${monthfirst}%2F${yearfirst}',
+                daylast < 10
+                    ? monthfirst > 10
+                        ? '0${daylast}%2F${monthlast}%2F${yearlast}'
+                        : '0${daylast}%2F0${monthlast}%2F${yearlast}'
+                    : monthfirst > 10
+                        ? '${daylast}%2F${monthlast}%2F${yearlast}'
+                        : '${daylast}%2F0${monthlast}%2F${yearlast}')
+            .then((value) {
+          setState(() {
+            data = value;
+          });
+        });
         break;
       default:
     }
@@ -126,28 +147,30 @@ class _homeState extends State<home> {
     });
     return Scaffold(
         appBar: null,
-        body: currentIndex == -10
+        body: currentIndex == 0
             ? Body(
                 data: data,
                 
-                onCurrentIndexChanged: (int currentIndex) {
-                  setState(() {
-                    this.currentIndex = currentIndex;
-                  });
-                },
+                // onCurrentIndexChanged: (int currentIndex) {
+                //   setState(() {
+                //     this.currentIndex = currentIndex-10;
+                //   });
+                // },
               )
-            : currentIndex == -9
+            : currentIndex == 1
                 ? diemcanhan()
-                : currentIndex == -8
-                    ? canhan()
-                    : chitiet(
-                        data: data,
-                        currentIndex: currentIndex,
-                      ),
+                : canhan(),
+                    //
+                // currentIndex == -8
+                //     ? canhan():null,
+                    // : chitiet(
+                    //     data: data,
+                    //     currentIndex: currentIndex,
+                    //   ),
         bottomNavigationBar: bottomBar(
           onCurrentIndexChanged: (int currentIndex) {
             setState(() {
-              this.currentIndex = currentIndex-10;
+              this.currentIndex = currentIndex;
             });
           },
         ));
