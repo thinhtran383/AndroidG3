@@ -46,9 +46,9 @@ Future<List<Data>> fetchData(String userId, String startDate, String endDate) as
 
 
 
-Future<List<DataDiemKetThucHocPhan>> fetchDataDiemKetThucHocPhan() async {
+Future<List<DataDiemKetThucHocPhan>> fetchDataDiemKetThucHocPhan(String userId) async {
   final apiUrl =
-      'https://qldtbeta.phenikaa-uni.edu.vn/sinhvienapi/api/SV_ThongTin/KetQuaHocTapCaNhan?action=SV_ThongTin%2FKetQuaHocTapCaNhan&strChucNang_Id=458922CCB7064213A3D94F7511852261&strQLSV_NguoiHoc_Id=7EEE02F6121340B98E4F0530ECB0AD84&strDaoTao_ChuongTrinh_Id=68F33FEDF14D4576943E7AFE6E05F84A&strNguoiThucHien_Id=7EEE02F6121340B98E4F0530ECB0AD84';
+      'https://qldtbeta.phenikaa-uni.edu.vn/sinhvienapi/api/SV_ThongTin/KetQuaHocTapCaNhan?action=SV_ThongTin%2FKetQuaHocTapCaNhan&strChucNang_Id=458922CCB7064213A3D94F7511852261&strQLSV_NguoiHoc_Id=$userId&strDaoTao_ChuongTrinh_Id=68F33FEDF14D4576943E7AFE6E05F84A&strNguoiThucHien_Id=$userId';
   final beerKey =
       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ijc5QkUzRkYxMzI4RjQ5QTM5N0UxNUVGQUY0RTgzODcwOzZkYzBiYzIyMTliMzQ5YTJiNWQ1NWYzMzY4Y2QxMmQxOzIwMjMwNDEwMTAwMTAyIiwibmJmIjoxNjgxMDk1NjYyLCJleHAiOjE2ODM2ODc2NjIsImlhdCI6MTY4MTA5NTY2MiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.Z7YRqtFgu37PAV6vqouyv-5WE5bm5AVHZTIDAx3aLfQ';
 

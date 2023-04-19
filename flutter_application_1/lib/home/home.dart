@@ -30,17 +30,12 @@ class _homeState extends State<home> {
   late DateTime now;
 
   List<Data> data = [];
-  List<DataDiemKetThucHocPhan> Datadiemketthuchocphan=[];
+  List<DataDiemKetThucHocPhan> Datadiemketthuchocphan = [];
   int currentIndex = 0;
   late Box<todo> box;
   @override
   void initState() {
     calculateWeekDays();
-    fetchDataDiemKetThucHocPhan().then((value)  {
-       setState(() {
-            Datadiemketthuchocphan = value;
-          });
-    });
   }
 
   void calculateWeekDays() {
@@ -58,6 +53,12 @@ class _homeState extends State<home> {
 
     switch (widget.MSV) {
       case '21010627':
+        fetchDataDiemKetThucHocPhan('79BE3FF1328F49A397E15EFAF4E83870')
+            .then((value) {
+          setState(() {
+            Datadiemketthuchocphan = value;
+          });
+        });
         fetchData(
                 '79BE3FF1328F49A397E15EFAF4E83870',
                 dayfirst < 10
@@ -81,6 +82,12 @@ class _homeState extends State<home> {
         });
         break;
       case '21010636':
+        fetchDataDiemKetThucHocPhan('7EEE02F6121340B98E4F0530ECB0AD84')
+            .then((value) {
+          setState(() {
+            Datadiemketthuchocphan = value;
+          });
+        });
         fetchData(
                 '7EEE02F6121340B98E4F0530ECB0AD84',
                 dayfirst < 10
@@ -104,6 +111,12 @@ class _homeState extends State<home> {
         });
         break;
       case '21012870':
+        fetchDataDiemKetThucHocPhan('43F82BDE32474B928ECC4B3648E3F439')
+            .then((value) {
+          setState(() {
+            Datadiemketthuchocphan = value;
+          });
+        });
         fetchData(
                 '43F82BDE32474B928ECC4B3648E3F439',
                 dayfirst < 10
@@ -144,37 +157,17 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-    TimerBuilder.periodic(Duration(days: 1), builder: (context) {
-      DateTime now = DateTime.now();
-      DateTime firstDayOfWeeknew =
-          now.subtract(Duration(days: now.weekday - 1));
-      DateTime lastDayOfWeeknuew = now.add(Duration(days: 7 - now.weekday));
-      // Cập nhật giá trị của bạn tại đây
-
-      return SizedBox.shrink();
-    });
     return Scaffold(
         appBar: null,
         body: currentIndex == 0
             ? Body(
                 data: data,
-                
-                // onCurrentIndexChanged: (int currentIndex) {
-                //   setState(() {
-                //     this.currentIndex = currentIndex-10;
-                //   });
-                // },
               )
             : currentIndex == 1
-                ? diemcanhan(data: Datadiemketthuchocphan,)
+                ? diemcanhan(
+                    data: Datadiemketthuchocphan,
+                  )
                 : canhan(),
-                    //
-                // currentIndex == -8
-                //     ? canhan():null,
-                    // : chitiet(
-                    //     data: data,
-                    //     currentIndex: currentIndex,
-                    //   ),
         bottomNavigationBar: bottomBar(
           onCurrentIndexChanged: (int currentIndex) {
             setState(() {

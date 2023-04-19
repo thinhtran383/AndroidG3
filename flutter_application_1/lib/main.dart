@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 import 'home/login.dart';
+import 'home/loginAnimaition.dart';
 import 'network/network_request.dart';
 
 late Box box;late Box boxdone;
@@ -34,8 +35,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
+      home: LogoAnimation(),
     // home: login(),
-      home: home(MSV: '21010636',),
+      // home: home(MSV: '21010636',),
       debugShowCheckedModeBanner: false,
     );
   }
