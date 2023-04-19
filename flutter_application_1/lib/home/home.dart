@@ -2,18 +2,20 @@ import 'dart:async';
 
 import 'package:ClassPlanner/home/canhan/canha.dart';
 import 'package:ClassPlanner/home/diemcanha/diem.dart';
+import 'package:ClassPlanner/model/data/dataDiem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:hive_flutter/adapters.dart';
 import '../model/data/data.dart';
+import '../model/data/dataDiem.dart';
 import '../network/network_request.dart';
 import 'canhan/models/Todo_box.dart';
 import 'lichhoc/body.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'bottomBar.dart';
-import 'lichhoc/chitiet/chitietlichhoc.dart';
+// import 'lichhoc/chitiet/chitietlichhoc.dart';
 
 class home extends StatefulWidget {
   final String MSV;
@@ -28,11 +30,17 @@ class _homeState extends State<home> {
   late DateTime now;
 
   List<Data> data = [];
+  List<DataDiemKetThucHocPhan> Datadiemketthuchocphan=[];
   int currentIndex = 0;
   late Box<todo> box;
   @override
   void initState() {
     calculateWeekDays();
+    fetchDataDiemKetThucHocPhan().then((value)  {
+       setState(() {
+            Datadiemketthuchocphan = value;
+          });
+    });
   }
 
   void calculateWeekDays() {
@@ -158,7 +166,7 @@ class _homeState extends State<home> {
                 // },
               )
             : currentIndex == 1
-                ? diemcanhan()
+                ? diemcanhan(data: Datadiemketthuchocphan,)
                 : canhan(),
                     //
                 // currentIndex == -8
