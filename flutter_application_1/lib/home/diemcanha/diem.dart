@@ -14,60 +14,81 @@ class diemcanhan extends StatefulWidget {
 }
 
 class _diemcanhanState extends State<diemcanhan> {
+  List<ExpansionPanelData> expansionPanelDataList = [];
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
+    // Tạo danh sách ExpansionPanelData từ dữ liệu widget.data
     final Map<String, List<DataDiemKetThucHocPhan>> yearMap = {};
     for (final item in widget.data) {
-      final key = '${item.NAMHOC}-${item.HOCKY}';
+      final key = '${item.NAMHOC}-Kỳ ${item.HOCKY.toInt()}';
       if (!yearMap.containsKey(key)) {
         yearMap[key] = [];
       }
       yearMap[key]!.add(item);
     }
+    expansionPanelDataList = yearMap.entries
+        .map((e) => ExpansionPanelData(
+              yearAndSemester: e.key,
+              dataList: e.value,
+              isExpanded: false,
+            ))
+        .toList();
+  }
 
-    final List<ExpansionPanel> expansionPanels = yearMap.entries.map((e) {
-      final String yearAndSemester = e.key;
-      final List<DataDiemKetThucHocPhan> dataList = e.value;
-
-      final List<Widget> dataListWidget = dataList.map((data) {
-        return Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListTile(
-            
-            title: Text('${data.DAOTAO_HOCPHAN_TEN}'),
-            subtitle: Text('${data.DIEMQUYDOI_TEN}'),
-            trailing: Text('${data.DIEM}'),
-          ),
-        );
-      }).toList();
-
-      final List<String> yearAndSemesterList = yearAndSemester.split('-');
-      final String year = yearAndSemesterList[0];
-      final String semester = yearAndSemesterList[1];
-
-      return ExpansionPanel(
-        headerBuilder: (BuildContext context, bool isExpanded) {
-          return ListTile(
-            title: Text('Năm học $year - Học kỳ $semester'),
-          );
-        },
-        body: Column(
-          children: dataListWidget,
-        ),
-        isExpanded: false,
-      );
-    }).toList();
-
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(16, 50, 16, 16),
         child: ExpansionPanelList(
-          
-          expansionCallback: (int index, bool isExpanded) {},
-          children: expansionPanels,
+          expansionCallback: (int index, bool isExpanded) {
+            setState(() {
+              expansionPanelDataList[index].isExpanded = !isExpanded;
+            });
+          },
+          children: expansionPanelDataList
+              .map(
+                (expansionPanelData) => ExpansionPanel(
+                  headerBuilder: (BuildContext context, bool isExpanded) {
+                    return ListTile(
+                      title: Text(
+                          'Năm học ${expansionPanelData.yearAndSemester}'),
+                    );
+                  },
+                  body: Column(
+                    children: expansionPanelData.dataList
+                        .map((data) => Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ListTile(
+                                title: Text('${data.DAOTAO_HOCPHAN_TEN}',style: TextStyle(fontWeight: FontWeight.bold, ),),
+                                subtitle: Text('${data.DIEMQUYDOI_TEN}'),
+                                trailing: Text('${data.DIEM}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18 ),),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                  isExpanded: expansionPanelData.isExpanded,
+                ),
+              )
+              .toList(),
         ),
       ),
     );
   }
+}
+
+class ExpansionPanelData {
+  final String yearAndSemester;
+  final List<DataDiemKetThucHocPhan> dataList;
+  bool isExpanded;
+
+  ExpansionPanelData({
+    required this.yearAndSemester,
+    required this.dataList,
+    required this.isExpanded,
+  });
 }
