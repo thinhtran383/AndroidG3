@@ -151,14 +151,14 @@ class _BodyState extends State<Body> {
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(8.0),
                                     color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 3),
-                                      ),
-                                    ],
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.withOpacity(0.5),
+                                    //     spreadRadius: 2,
+                                    //     blurRadius: 5,
+                                    //     offset: Offset(0, 3),
+                                    //   ),
+                                    // ],
                                   ),
                                   padding: EdgeInsets.all(16.0),
                                   child: Row(

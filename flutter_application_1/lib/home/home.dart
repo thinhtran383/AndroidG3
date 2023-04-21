@@ -51,16 +51,14 @@ class _homeState extends State<home> {
     int monthfirst = firstDayOfWeek.month;
     int yearfirst = firstDayOfWeek.year;
 
-    switch (widget.MSV) {
-      case '21010627':
-        fetchDataDiemKetThucHocPhan('79BE3FF1328F49A397E15EFAF4E83870')
+  fetchDataDiemKetThucHocPhan(widget.MSV)
             .then((value) {
           setState(() {
             Datadiemketthuchocphan = value;
           });
         });
         fetchData(
-                '79BE3FF1328F49A397E15EFAF4E83870',
+                widget.MSV,
                 dayfirst < 10
                     ? monthfirst > 10
                         ? '0${dayfirst}%2F${monthfirst}%2F${yearfirst}'
@@ -80,67 +78,7 @@ class _homeState extends State<home> {
             data = value;
           });
         });
-        break;
-      case '21010636':
-        fetchDataDiemKetThucHocPhan('7EEE02F6121340B98E4F0530ECB0AD84')
-            .then((value) {
-          setState(() {
-            Datadiemketthuchocphan = value;
-          });
-        });
-        fetchData(
-                '7EEE02F6121340B98E4F0530ECB0AD84',
-                dayfirst < 10
-                    ? monthfirst > 10
-                        ? '0${dayfirst}%2F${monthfirst}%2F${yearfirst}'
-                        : '0${dayfirst}%2F0${monthfirst}%2F${yearfirst}'
-                    : monthfirst > 10
-                        ? '${dayfirst}%2F${monthfirst}%2F${yearfirst}'
-                        : '${dayfirst}%2F0${monthfirst}%2F${yearfirst}',
-                daylast < 10
-                    ? monthfirst > 10
-                        ? '0${daylast}%2F${monthlast}%2F${yearlast}'
-                        : '0${daylast}%2F0${monthlast}%2F${yearlast}'
-                    : monthfirst > 10
-                        ? '${daylast}%2F${monthlast}%2F${yearlast}'
-                        : '${daylast}%2F0${monthlast}%2F${yearlast}')
-            .then((value) {
-          setState(() {
-            data = value;
-          });
-        });
-        break;
-      case '21012870':
-        fetchDataDiemKetThucHocPhan('43F82BDE32474B928ECC4B3648E3F439')
-            .then((value) {
-          setState(() {
-            Datadiemketthuchocphan = value;
-          });
-        });
-        fetchData(
-                '43F82BDE32474B928ECC4B3648E3F439',
-                dayfirst < 10
-                    ? monthfirst > 10
-                        ? '0${dayfirst}%2F${monthfirst}%2F${yearfirst}'
-                        : '0${dayfirst}%2F0${monthfirst}%2F${yearfirst}'
-                    : monthfirst > 10
-                        ? '${dayfirst}%2F${monthfirst}%2F${yearfirst}'
-                        : '${dayfirst}%2F0${monthfirst}%2F${yearfirst}',
-                daylast < 10
-                    ? monthfirst > 10
-                        ? '0${daylast}%2F${monthlast}%2F${yearlast}'
-                        : '0${daylast}%2F0${monthlast}%2F${yearlast}'
-                    : monthfirst > 10
-                        ? '${daylast}%2F${monthlast}%2F${yearlast}'
-                        : '${daylast}%2F0${monthlast}%2F${yearlast}')
-            .then((value) {
-          setState(() {
-            data = value;
-          });
-        });
-        break;
-      default:
-    }
+        
     Timer.periodic(Duration(days: 1), (timer) {
       now = DateTime.now();
       firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));

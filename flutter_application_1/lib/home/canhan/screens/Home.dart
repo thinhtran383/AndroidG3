@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 
 import 'package:hive/hive.dart';
 
-import '../models/ToDo.dart';
+// import '../models/ToDo.dart';
 import '../models/Todo_box.dart';
-import '../widgets/AppBar.dart';
+// import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
 import '../widgets/Todo_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
