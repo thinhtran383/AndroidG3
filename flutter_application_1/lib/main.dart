@@ -1,29 +1,33 @@
 
 
-
-import 'package:api/home/canhan/models/ToDoAdapter.dart';
-import 'package:api/home/home.dart';
+import 'package:ClassPlanner/home/canhan/models/Todo_box.dart';
+import 'package:ClassPlanner/home/home.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-
+import 'package:http/http.dart' as http;
 import 'home/login.dart';
+import 'home/loginAnimaition.dart';
+import 'network/network_request.dart';
 
 
+late Box box;late Box boxdone;
+void main() async  {
 
 
-void main() async {
-
-  WidgetsFlutterBinding.ensureInitialized();
    await Hive.initFlutter();
-  //  Hive.registerAdapter(ToDoAdapter());
-  Hive.openBox('todoBox');
-    Hive.openBox('todoBoxDone');
-  
- 
+
+  Hive.registerAdapter<todo>(todoAdapter());
+  box = await Hive.openBox<todo>("tasks");
+
+
 
   runApp(const MyApp());
 }
+
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,10 +36,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: login(),
-      home: home(
-        MSV: '21010627',
-      ),
+
+      
+      home: LogoAnimation(),
+    // home: login(),
+      // home: home(MSV: '21010636',),
+
       debugShowCheckedModeBanner: false,
     );
   }

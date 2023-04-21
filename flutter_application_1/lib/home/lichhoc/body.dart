@@ -8,7 +8,19 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import '../../model/data/data.dart';
 import '../../network/network_request.dart';
 
-class Body extends StatelessWidget {
+
+typedef void CurrentIndexChangedCallback(int currentIndex);
+class Body extends StatefulWidget {
+  final List<Data> data;
+  // late final int currentIndex;
+  Body({Key? key, required this.data })
+      : super(key: key);
+       
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   List<dynamic> time = [
     '6h45',
     '7h40',
@@ -24,9 +36,6 @@ class Body extends StatelessWidget {
     '16h50',
     '17h45'
   ];
-  final List<Data> data;
-
-  Body({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +43,11 @@ class Body extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: ListView.builder(
-            itemCount: data.length,
+            itemCount: widget.data.length,
             itemBuilder: (context, index) {
               String gioBatDau = '';
               String gioKetThuc = '';
-              switch (data[index].TIETBATDAU) {
+              switch (widget.data[index].TIETBATDAU) {
                 case 1:
                   gioBatDau = '6h45';
                   break;
@@ -77,7 +86,7 @@ class Body extends StatelessWidget {
                   break;
                 default:
               }
-              switch (data[index].TIETKETTHUC) {
+              switch (widget.data[index].TIETKETTHUC) {
                 case 1:
                   gioKetThuc = '6h45';
                   break;
@@ -117,92 +126,110 @@ class Body extends StatelessWidget {
                 default:
               }
 
-              return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SingleChildScrollView(
-                   physics: ClampingScrollPhysics(),
-                  child: ListView(
-                   physics: NeverScrollableScrollPhysics(),
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    // Cập nhật giá trị tại thằng cha
                    
-                   shrinkWrap: true,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  color: Colors.white,
-                                ),
-                                
-                                padding: EdgeInsets.all(16.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${data[index].THU == '8' ? "CHỦ \n  NHẬT" : "THỨ \n ${data[index].THU}"}',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 20.0,
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
+                    child: ListView(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: Colors.white,
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.withOpacity(0.5),
+                                    //     spreadRadius: 2,
+                                    //     blurRadius: 5,
+                                    //     offset: Offset(0, 3),
+                                    //   ),
+                                    // ],
+                                  ),
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${widget.data[index].THU == '8' ? "CHỦ \n  NHẬT" : "THỨ \n ${widget.data[index].THU}"}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                        ),
+                                      ), // Hiển thị thông tin thứ
+                                      SizedBox(width: 10.0),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              '${widget.data[index].TENHOCPHAN}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                                color: Color.fromRGBO(
+                                                    30, 30, 30, 1.0),
+                                              )),
+                                          Text(
+                                              '${widget.data[index].TENPHONGHOC}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 20.0,
+                                              )),
+                                        ],
                                       ),
-                                    ), // Hiển thị thông tin thứ
-                                    SizedBox(width: 10.0),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text('${data[index].TENHOCPHAN}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color:
-                                                  Color.fromRGBO(30, 30, 30, 1.0),
-                                            )),
-                                        Text('${data[index].TENPHONGHOC}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                            )),
-                                      ],
-                                    ),
-                                    SizedBox(width: 10.0),
-                
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text('$gioBatDau',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color:
-                                                  Color.fromRGBO(30, 30, 30, 1.0),
-                                              fontSize: 18.0,
-                                            )),
-                                        Text('${gioKetThuc}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 10.0,
-                                            )),
-                                      ],
-                                    ),
-                
-                                    //
-                                  ],
+                                      SizedBox(width: 10.0),
+
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text('$gioBatDau',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    30, 30, 30, 1.0),
+                                                fontSize: 18.0,
+                                              )),
+                                          Text('${gioKetThuc}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 10.0,
+                                              )),
+                                        ],
+                                      ),
+
+                                      //
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

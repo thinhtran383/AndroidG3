@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
-import '../models/ToDo.dart';
-import '../widgets/AppBar.dart';
+import 'package:hive/hive.dart';
+
+// import '../models/ToDo.dart';
+import '../models/Todo_box.dart';
+// import '../widgets/AppBar.dart';
 import '../widgets/SearchBox.dart';
 import '../widgets/Todo_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,25 +25,36 @@ class _HomeState extends State<Home> {
   // Box
 
   bool _isAddingEvent = false;
-  final todoList = ToDo.todoList();
+  // final todoList = todo.todoList();
 
   final todoController = TextEditingController();
-  List<ToDo> foundToDo = [];
-  List<ToDo> toDoListDone = [];
-  late Stream<BoxEvent> _todoBoxEventStream;
-  final _todoBox = Hive.box('todoBox') ;
-  final _todoBoxDone = Hive.box('todoBoxDone');
 
- 
+  List<todo> foundToDo = [];
 
- 
-
+  final tasksBox = Hive.box<todo>('tasks');
+late Box<todo> box;
   @override
   void initState()  {
-    super.initState();
     
+    foundToDo = tasksBox.values.toList();
 
+    tasksBox.watch().listen((event) {
+      foundToDo = tasksBox.values.toList();
+    });
+    // tasksBox.clear();
+
+    super.initState();
   }
+
+
+  // @override
+  // void dispose() {
+  //   tasksBox.close();
+  //   super.dispose();
+  // }
+
+ 
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +82,13 @@ class _HomeState extends State<Home> {
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      for (ToDo todo
-                          in foundToDo.reversed) // in ra danh sach todo
-                        ToDoItem(
-                          todo: todo,
-                          onToDoChanged: onClickTodoItem,
-                          onToDoDeleted: onClickDeleteIcon,
-                        ),
+                      for (todo todo1 in foundToDo.reversed)
+                        if (todo1.hienthi == true)
+                          ToDoItem(
+                            todo1: todo1,
+                            onToDoChanged: onClickTodoItem,
+                            onToDoDeleted: onClickDeleteIcon,
+                          ),
                       ListView(
                         shrinkWrap: true,
                         children: [
@@ -88,13 +102,13 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      for (ToDo todo
-                          in toDoListDone.reversed) // in ra danh sach todo
-                        ToDoItem(
-                          todo: todo,
-                          onToDoChanged: onClickToDoItemDone,
-                          onToDoDeleted: onClickDeleteIcon,
-                        ),
+                      for (todo todo1 in foundToDo.reversed)
+                        if (todo1.hienthi == false)
+                          ToDoItem(
+                            todo1: todo1,
+                            onToDoChanged: onClickToDoItemDone,
+                            onToDoDeleted: onClickDeleteIcon,
+                          ),
                     ],
                   ),
                 )
@@ -206,43 +220,49 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void onClickToDoItemDone(ToDo todo) {
+  void onClickToDoItemDone(todo todo1) {
     setState(() {
-      // check box
-
-      todo.isDone = !todo.isDone;
+      todo1.isDone = !todo1.isDone;
     });
 
-    if (todo.isDone) {
+    if (todo1.isDone ==false) {
       setState(() {
-        todo.isDone = true;
-        toDoListDone.add(todo);
-        _todoBoxDone.add(todo);
-        // foundToDo.addAll(_todoBoxDone.values);
 
-        todoList.removeWhere((todo) => todo.isDone == true);
-      });
-    } else {
-      setState(() {
-        todo.isDone = false;
-        todoList.add(todo);
-        _todoBox.add(todo);
-        toDoListDone.removeWhere((todo) => todo.isDone == false);
+        
+        for (var todo1 in foundToDo) {
+          if (todo1.isDone == false) {
+            todo1.hienthi = true;
+            tasksBox.put(todo1.key, todo1);
+          }
+         
+        }
+        todo1.isDone = false;
+
       });
     }
+
+    
   }
 
-  void onClickTodoItem(ToDo todo) {
+  void onClickTodoItem(todo todo) {
     setState(() {
       todo.isDone = !todo.isDone;
     });
 
     if (todo.isDone) {
-      toDoListDone.add(todo);
-      _todoBoxDone.add(todo);
+
+     
 
       setState(() {
-        todoList.removeWhere((todoo) => todoo.id == todo.id);
+        for (var todo1 in foundToDo) {
+          if (todo1.isDone == true && todo1.id == todo.id) {
+            todo1.hienthi = false;
+            tasksBox.put(todo1.key, todo1);
+          }
+        }
+        todo.isDone = true;
+
+       
       });
 
       ScaffoldMessenger.of(context).showSnackBar(// hien thi thong bao
@@ -264,10 +284,14 @@ class _HomeState extends State<Home> {
     }
   }
 
-  void onClickDeleteIcon(String id) {
+
+
+  void onClickDeleteIcon(todo id) {
     setState(() {
-      todoList.removeWhere((todoo) => todoo.id == id);
-      toDoListDone.removeWhere((todoo) => todoo.id == id);
+
+
+      tasksBox.delete(id.key);
+  
     });
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -313,30 +337,30 @@ class _HomeState extends State<Home> {
     setState(() {
       _isAddingEvent = false;
 
-      todoList.add(ToDo(
+      tasksBox.add(todo(
+
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         contentTodo: toDo,
         isDate: seconds,
         date: datenow,
+        hienthi: true,
       ));
-      _todoBox.add(ToDo(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        contentTodo: toDo,
-        isDate: seconds,
-        date: datenow,
-      ));
+
+
+     
+
     });
 
     todoController.clear();
   }
 
   void runSearch(String query) {
-    List<ToDo> result = [];
+    List<todo> result = [];
     if (query.isEmpty) {
       // neu khong co gi thi khong lam gi ca
-      result = todoList;
+      result = tasksBox.values.toList();
     } else {
-      result = todoList
+      result = tasksBox.values
           .where((todo) =>
               todo.contentTodo!.toLowerCase().contains(query.toLowerCase()))
           .toList();

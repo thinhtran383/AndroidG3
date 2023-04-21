@@ -1,17 +1,19 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 
 import '../constants/Colors.dart';
-import '../models/ToDo.dart';
+// import '../models/ToDo.dart';
+import '../models/Todo_box.dart';
 
 class ToDoItem extends StatelessWidget {
-  final ToDo todo;
+  final todo todo1;
   final onToDoChanged;
   final onToDoDeleted;
   const ToDoItem(
       {Key? key,
-      required this.todo,
+      required this.todo1,
       required this.onToDoChanged,
       required this.onToDoDeleted})
       : super(key: key);
@@ -29,14 +31,14 @@ class ToDoItem extends StatelessWidget {
       child: ListTile(
         
         onTap: () {
-          onToDoChanged(todo); //
+          onToDoChanged(todo1); //
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         tileColor: Colors.white,
         leading: Icon(
-          todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+          todo1.isDone==true ? Icons.check_box : Icons.check_box_outline_blank,
           color: tdBlue,
         ),
         title: Row(
@@ -48,21 +50,21 @@ class ToDoItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  todo.contentTodo!,
+                  todo1.contentTodo!,
                   style: TextStyle(
                     fontSize: 16,
-                    color: todo.dateDone ? tdRed : tdBlack,
-                    decoration: todo.isDone ? TextDecoration.lineThrough : null,
+                    color: todo1.dateDone==true ? tdRed : tdBlack,
+                    decoration: todo1.isDone==true ? TextDecoration.lineThrough : null,
                   ),
                 ),
                 SizedBox(width: 8),
                 Text(
-                  todo.date.toString(),
+                  todo1.date.toString(),
                   style: TextStyle(
 
                     fontSize: 10,
-                    color: todo.dateDone ? tdRed : tdBlack,
-                    decoration: todo.isDone ? TextDecoration.lineThrough : null,
+                    color: todo1.dateDone==true ? tdRed : tdBlack,
+                    decoration: todo1.isDone==true ? TextDecoration.lineThrough : null,
                   ),
                 ),
               ],
@@ -83,7 +85,7 @@ class ToDoItem extends StatelessWidget {
             iconSize: 18,
             icon: Icon(Icons.delete),
             onPressed: () {
-              onToDoDeleted(todo.id); //
+              onToDoDeleted(todo1); //
             },
           ),
         ),
