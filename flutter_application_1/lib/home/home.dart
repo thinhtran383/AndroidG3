@@ -1,7 +1,5 @@
 import 'dart:async';
-
-import 'package:ClassPlanner/home/canhan/canha.dart';
-import 'package:ClassPlanner/home/diemcanha/diem.dart';
+import 'canhan/canhan.dart';
 import 'package:ClassPlanner/model/data/dataDiem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +10,7 @@ import '../model/data/data.dart';
 import '../model/data/dataDiem.dart';
 import '../network/network_request.dart';
 import 'canhan/models/Todo_box.dart';
+import 'diemcanhan/diem.dart';
 import 'lichhoc/body.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'bottomBar.dart';

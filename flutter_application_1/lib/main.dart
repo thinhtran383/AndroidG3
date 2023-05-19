@@ -13,21 +13,11 @@ import 'network/network_request.dart';
 
 late Box box;late Box boxdone;
 void main() async  {
-
-
-   await Hive.initFlutter();
-
+  await Hive.initFlutter();
   Hive.registerAdapter<todo>(todoAdapter());
   box = await Hive.openBox<todo>("tasks");
-
-
-
   runApp(const MyApp());
 }
-
-
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
