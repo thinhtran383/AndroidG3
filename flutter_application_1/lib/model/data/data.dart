@@ -1,5 +1,3 @@
-
-
 class Data {
   dynamic TENHOCPHAN;
   dynamic THU;
@@ -19,10 +17,10 @@ class Data {
       required this.TIETKETTHUC});
 
 
-factory  Data.fromJson(Map<String, dynamic> json){
+  factory Data.fromJson(Map<String, dynamic> json){
   
     return Data(
-     TENHOCPHAN : json["TENHOCPHAN"],
+    TENHOCPHAN : json["TENHOCPHAN"],
     THU : json['THU'],
     SOTIET : json['SOTIET'],
     TIETBATDAU:json['TIETBATDAU'],
@@ -31,7 +29,6 @@ factory  Data.fromJson(Map<String, dynamic> json){
     BUOIHOC:json['BUOIHOC'],
     );
 
-}
+  }
 
-  
 }
