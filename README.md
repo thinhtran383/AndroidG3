@@ -15,12 +15,12 @@ ClassPlanner là một ứng dụng di động được phát triển bằng Flu
 ## Hướng Dẫn Cài Đặt
 1. **Clone Repository:**
     ```bash
-    git clone https://github.com/your-username/ClassPlanner.git
+    git clone https://github.com/thinhtran383/AndroidG3.git
     ```
 
 2. **Cài Đặt Dependencies:**
     ```bash
-    cd ClassPlanner
+    cd AndroidG3
     flutter pub get
     ```
 
